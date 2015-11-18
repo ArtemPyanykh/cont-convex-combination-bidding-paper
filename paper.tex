@@ -86,7 +86,35 @@
 % Introduction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Введение}
-TODO
+
+В работе [\ref{lit:demeyer02}] была рассмотрена многошаговая модель биржевых торгов однотипными акциями, в которой торги между собой ведут два игрова.
+Перед началом торгов случайный ход определяет цену акции на весь период торгов, которая в состояниях рынка $L$ и $H$ равна $0$ и $1$ соответственно.
+Выбранная цена сообщается первому игроку и не сообщается второму, при этом второй игрок знает, что первый -- инсайдер.
+Также оба игрока знают вероятность $p$ высокой цены акции.
+
+На каждом шаге торгов игроки одновременно и независимо назначают некоторую цену за акцию.
+Игроки могут делать произвольные вещественные ставки, причем игрок, предложивший б\'{o}льшую цену, покупает у другого акцию по названной цене.
+Задачей игроков является максимизация стоимости портфеля, состоящего из некоторого числа акций и суммы денег.
+
+Модель сводится к повторяющейся игре с неполной информацией, как описано в [\ref{lit:aumann}], для которой Де Мейером и Салей были найдены оптимальные стратегии игроков и значение игры.
+Позднее В. Доманским [\ref{lit:domansky07}] была рассмотрена модицикация модели, в которой ставки игроков могли принимать значения только из заданного дискретного множества $\{ i/m, \: i = \overline{0, m} \}$.
+В данной постановке им было получено решение игры неограниченной продолжительности.
+
+В обеих работах использовался одинаковый механизм проведения транзакции, при котором акция продается по наибольшей из предложенных цен.
+Можно, однако, рассмотреть и следующий механизм формирования цены акции, предложенный в [\ref{lit:chatterjee83}]:
+игроки одновременно предлагают цены $p_1$ и $p_2$, при $p_1 > p_2$ акция продается по цене $\beta p_1 + (1-\beta) p_2$, где $\beta \in [0, 1]$ -- заданный коэффициент, характеризующий переговорную силу продавца.
+
+Фактически, в работах [\ref{lit:demeyer02}] и [\ref{lit:domansky07}] коэффициент $\beta$ равен $1$.
+Обобщение дискретной модели на случай произвольного $\beta$ было рассмотрено в [\ref{lit:pyanykh16}].
+В данной работе обобщение на случай произвольного $\beta$ проведено для модели игры с непрерывными ставками.
+
+\section{Модель игры}
+
+\section{Оценка сверху выигрыша первого игрока}
+
+\section{Оценка снизу выигрыша первого игрока}
+
+\section{Значение игры}
 
 \vskip 10mm
 
@@ -98,21 +126,20 @@ TODO
 \end{center}
 
 \begin{enumerate}
-\item\label{lit:aumann}
-  Aumann R.J., Maschler M. B. \textit{Repeated Games with Incomplete Information}. The MIT Press, Cambridge, London
-
-\item\label{lit:chatterjee83}
-  Chatterjee K., Samuelson W. \textit{Bargaining under Incomplete Information} // Operations Research. 1983. V. 31. N. 5. P. 835--851
-
 \item\label{lit:demeyer02}
   De Meyer B., Saley H. \textit{On the strategic origin of Brownian motion in finance} // Int J Game Theory. 2002. V. 31. P. 285--319
+
+\item\label{lit:aumann}
+  Aumann R.J., Maschler M.B. \textit{Repeated Games with Incomplete Information}. The MIT Press, Cambridge, London
 
 \item\label{lit:domansky07}
   Domansky V. \textit{Repeated games with asymmetric information and random price fluctuations at finance markets} // Int J Game Theory. 2007. V. 36(2). P. 241--257
 
+\item\label{lit:chatterjee83}
+  Chatterjee K., Samuelson W. \textit{Bargaining under Incomplete Information} // Operations Research. 1983. V. 31. N. 5. P. 835--851
 
-\item\label{lit:myerson83}
-  Myerson R.B., Satterthwaite M.A. \textit{Efficient Mechanisms for Bilateral Trading} // Journal of Economic Theory. 1983. V. 29. P. 265-281
+\item\label{lit:pyanykh16}
+  Пьяных А.И. Многошаговая модель биржевых торгов с асимметричной информацией и элементами переговоров // TODO
 \end{enumerate}
 
 \makeenginfo
