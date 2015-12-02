@@ -17,6 +17,8 @@
 \usepackage[russian]{babel}
 
 \usepackage{bbm}
+\usepackage{xargs}
+\usepackage{enumerate}
 
 \usepackage{mgta}
 %%\sloppy
@@ -35,6 +37,8 @@
 \newcommand{\Ind}{\mathbbm{1}}
 \newcommand{\Exp}{\mathbb{E}}
 \newcommand{\Port}[1]{\pi_{#1}}
+\newcommand*\di{\mathop{}\!\mathrm{d}}
+\newcommandx*\F[3][1={(f,Q)}, 2=n+1]{\ensuremath{F_{#2} \left( #1, #3 \right)}}
 
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -179,14 +183,21 @@ g_n(P, \sigma, \tau) = \Exp_{\Pi[P, \sigma, \tau]} V(\pi_n),
 \end{align*}
 Полученную игру обозначим $G_n(P)$. В случае, когда $V_{1,n}(P) = V_{2,n}(P)$,
 будем говорить, что игра имеет значение $V_n(P)$.
-Стратегию $\sigma^*$ назовем оптимальной, если
+
+Стратегии $\sigma^*$ и $\tau^*$ первого и второго игроков назовем оптимальными, если
 \[
-\inf_\tau g_n(P, \sigma^*, \tau) = V_{1,n}(P).
-\]
-Аналогично стратегию $\tau^*$ назовем оптимальной, если
-\[
+\inf_\tau g_n(P, \sigma^*, \tau) = V_{1,n}(P), \enskip
 \sup_\sigma g_n(P, \sigma, \tau^*) = V_{2,n}(P).
 \]
+
+Приведем без доказательства следующую (см. [\ref{lit:demeyer02}]):
+\begin{lemma}
+  $V_{1,n}$ и $V_{2,n}$ -- вогнутые непрерывные функции $P$. Кроме того\normalfont{,}
+  для любого $P \in [0, 1]$ выполняется неравенство
+  \[
+    0 \leqslant V_{1,n}(P) \leqslant V_{2,n}(P) \leqslant 2nP(1-P).
+  \]
+\end{lemma}
 
 \section{Оценка снизу выигрыша первого игрока}
 Следуя [\ref{lit:demeyer02}], начнем с анализа рекурсивной структуры игры
@@ -214,23 +225,267 @@ $\tilde{\sigma}$ -- семество стратегий в игре продолжительности $n-1$, зависящих
     g_n(P(p_{1,1}), \tilde{\sigma}(p_{1,1}, p_{2,1}), \tilde{\sigma}(p_{1,1}, p_{2,1})).
 \end{align*}
 
-% Рассмотрим стратегию $\sigma$ первого игрока в игре $G_{n+1}(P)$. Ход игрока
-% $\sigma_1$ на первом шаге игры вместе с $P$ индуцирует вероятностное
-% распределение $\Pi[P, \sigma_1]$ на $(s, p_{1,1})$. Обозначим через
-% \[
-% P(p_{1,1}) = \Pi[P, \sigma_1](s = H \;|\; p_{1,1})
-% \]
-% апостериорную вероятность состояния $H$ при условии, что первый игрок сделал
-% ставку $p_{1,1}$. Т.к. $p_{2,1}$ не зависит от $s$, то
-% \[
-% P(p_{1,1}) = \Pi[P, \sigma_1, \tau_1](s = H \;|\; p_{1,1}, p_{2,1}).
-% \]
 
-% Оставшуюся часть стратегии $(\sigma_2, \ldots, \sigma_n)$ можно рассматривать
-% как семейство стратегий в игре $G_n$ зависимое от ставок на первом шаге
-% $(p_{1,1}, p_{2,1})$. Аналогично, стратегию $\tau$ второго игрока можно
-% рассматривать как пару $(\tau_1, \~{\tau})$, где $\tau_1$ -- ход игрока на
-% первом шаге игры, а $\~{\tau}$ -- семейство стратегий
+Приведем без доказательства следующую (см. [\ref{lit:demeyer02}]):
+\begin{lemma}
+  \label{lemma:lowerBound:general}
+  Для любого $P \in [0, 1]$ выполняется неравенство
+  \begin{equation}
+    \label{eq:fp:lowerB:nonParameterized}
+    V_{1,n+1} \geqslant \max_{\sigma_1} \min_{p_{2,1}} g_1(P, \sigma_1, p_{2,1})
+    + \Exp_{\Pi[P, \sigma_1]} V_{1,n}(P(p_{1,1})).
+  \end{equation}
+
+\end{lemma}
+
+Параметризуем стратегию $\sigma_1$ при помощи пары функций
+$(f, Q)$ из $[0, 1]$ в $[0, 1]$, удовлетворяющих:
+
+\begin{subequations}
+  \begin{flalign}
+    \label{eq:fp:strategy:par:inc}
+    \diamond \quad f \text{ -- неубывает на } [0, 1], &&
+  \end{flalign}
+  \vspace{-2.0em}
+  \begin{flalign}
+    \label{eq:fp:strategy:par:eqP}
+    \diamond \quad \int_0^1 Q(u) \di u = P, &&
+  \end{flalign}
+  \vspace{-1.5em}
+  \begin{flalign}
+    \label{eq:fp:strategy:par:apostEq}
+    \diamond \quad \forall x, y \in [0, 1]: f(x) = f(y) \implies Q(x) = Q(y). &&
+  \end{flalign}
+\end{subequations}
+Если случайная величина $u$ равномерно распределена на $[0, 1]$, то положим
+$f(u) = p_{1,1}$ и $Q(u) = P(f(u))$, что дает нам $\Pi[P, \sigma_1]$.
+
+\begin{lemma}
+  $V_{1,n+1}(P) \geqslant \sup_{(f, Q)} \inf_{p_{2,1}} \F{p_{2,1}},$
+  где $(f, Q)$ удовлетворяют \eqref{eq:fp:strategy:par:inc} -- \eqref{eq:fp:strategy:par:apostEq} и
+  \begin{equation}
+    \label{eq:F:pBased}
+    \begin{aligned}
+      \F{p_{2,1}} &=
+      \int_0^1 \Ind_{f(u) > p_{2,1}} (Q(u) - \beta f(u) - \alpha p_{2,1}) \di u \enskip + \\
+      &+ \int_0^1 \Ind_{f(u) < p_{2,1}} (\alpha f(u) + \beta p_{2,1} - Q(u)) \di u \enskip + \\
+      &+ \int_0^1 V_{1,n}(Q(u)) \di u,
+    \end{aligned}
+  \end{equation}
+\end{lemma}
+Доказательство получается подстановкой $f$ и $Q$ в \eqref{eq:fp:lowerB:nonParameterized}.
+
+Будем искать уравнивающую стратегию первого игрока. Пусть
+$p_{2,1} = f(\gamma), \; \gamma \in [0, 1]$ и $f(\cdot)$ строго возрастает в
+$\gamma$. Тогда
+\begin{equation}
+  \label{eq:F:fBased}
+  \begin{aligned}
+    \F{f(\gamma)} &= \int_\gamma^1 \left(
+      Q(u) - \beta f(u) - \alpha f(\gamma)
+    \right) \di u \; + \\
+    & + \int_0^\gamma \left(
+      \alpha f(u) + \beta f(\gamma) - Q(u)
+    \right) \di u \; + \\
+    & + \int_0^1 V_{1,n}(Q(u)) \di u.
+  \end{aligned}
+\end{equation}
+
+По предположению $\F{f(\gamma)}$ не зависит от $\gamma$, следовательно
+\begin{align*}
+  \frac{\partial F_{n+1}}{\partial \gamma}
+  = (\gamma - \alpha) f'(\gamma) + 2 f(\gamma) - 2 Q(\gamma)
+  = 0.
+\end{align*}
+Отсюда
+\begin{equation}
+  \label{eq:f}
+  f(u) = (u - \alpha)^{-2} \int_\alpha^u 2(x-\alpha) Q(x) \di x.\footnotemark
+  \footnotetext{
+    При $u = \alpha$ доопределим $f(\alpha)$ по непрерывности как $Q(\alpha)$.
+  }
+\end{equation}%
+
+Подставив \eqref{eq:f} в \eqref{eq:F:fBased} при $\gamma = 1$ получим
+\begin{equation}
+  \label{eq:phi(q)}
+  \begin{aligned}
+    \Phi(Q)
+    &= \F[(f(u), Q)]{f(1)} = \\
+    &= \int_0^1 (2s - 1) Q(s) \di s + \int_0^1 V_{1,n}(Q(u)) \di u.
+  \end{aligned}
+\end{equation}
+
+Найдем $Q$ как решение изопериметрической вариационной задачи
+\begin{align}
+  \label{eq:qProblem}
+  \Phi(Q) \rightarrow max, \quad
+  \int_0^1 Q(u) \di u = P.
+\end{align}
+
+Перед тем, как перейти к решению \eqref{eq:qProblem}, заметим, что если функция
+$f(\cdot)$ -- вогнутая и ограниченная, ее субдифференциал $\partial f(\cdot)$ не
+является однозначно определенным в худшем случае не некотором счетном множестве
+точек. Таким образом, если то, как определена $f'(\cdot)$ на множестве меры нуль
+не существенно, $f'(\cdot)$ можно доопределить единственным образом как
+непрерывную слева или справа функцию.
+
+Применяя метод множителей Лагранжа (см. [\ref{lit:elsgolz}]), получим решение
+\eqref{eq:qProblem} в следующем виде:
+\begin{align}
+  \label{eq:qFormula}
+  &Q(u) = V^{*\prime}_{1,n}(1-\lambda-2u), \text{ где}\footnotemark\\
+    %
+  \label{eq:lambdaCond}
+  &\int_0^1 V^{*\prime}_{1,n}(1-\lambda-2u) \di u = P,
+\end{align}
+\footnotetext{
+  Через $f^*(x^*) = \inf_x \left\{ x \cdot x^* - f(x) \right \}$ обозначена
+  сопряженная к $f(\cdot)$ функция.%
+}
+
+Так как $V_{1,n}(\cdot)$ определена на $[0, 1]$, то $V^{*\prime}_{1,n}(\cdot)$
+невозрастает на $\mathbb{R}$ от $1$ до $0$. Следовательно $\lambda$, удовлетворяющая
+\eqref{eq:lambdaCond}, существует. Кроме того доопределим
+$V^{*\prime}_{1,n}(\cdot)$ таким образом, чтобы $Q(u)$ была непрерывной справа
+при $u < \alpha$ и непрерывной слева при $u \geqslant \alpha$.
+
+\begin{lemma}
+  \label{lemma:fp:fQ:isStrategy}
+  Пара функций $(f, Q)$\textnormal{,} определенная в \eqref{eq:f}\textnormal{,}
+  \eqref{eq:qFormula} принимает значения в $[0, 1]$ и удовлетворяет
+  \eqref{eq:fp:strategy:par:inc} -- \eqref{eq:fp:strategy:par:apostEq},
+  т.е. является корректной параметризацией стратегии первого игрока.
+\end{lemma}
+\begin{proof}
+  Так как $V^{*\prime}_{1,n}(\cdot)$ убывает от $1$ до $0$, то
+  $Q(\cdot)$ принимает значения в $[0, 1]$ и, кроме того, неубывает на $[0, 1]$.
+
+  Далее, можно заметить, что $f(u)$ является математическим ожиданием $Q(x)$,
+  где $x$ -- случайная величина распределенная между $\alpha$ и $u$ с плотностью
+  $2|x-\alpha|/(u-\alpha)^2$. Следовательно, $f(\cdot)$ также принимает значения
+  в $[0, 1]$.
+
+  Сделаем замену переменного $t = (x - \alpha)/(u - \alpha)$  в \eqref{eq:f}. Тогда
+  \begin{equation*}
+    f(u) = \int_0^1 2 t Q \left( t(u - \alpha) + \alpha \right) \di t.
+  \end{equation*}
+  Отсюда видно, что \eqref{eq:fp:strategy:par:inc} выполнено. Далее,
+  \eqref{eq:fp:strategy:par:eqP} выполнено по построению. Чтобы показать, что
+  \eqref{eq:fp:strategy:par:apostEq} выполняется, рассмотрим несколько случаев.
+
+  Пусть $\alpha < u_1 < u_2$. Тогда, так как $Q$ неубывает, почти при всех
+  $t \in [0, 1]$ выполнено
+  $ Q(t(u_1 - \alpha) + \alpha) = Q(t(u_2 - \alpha) + \alpha)$. Из непрерывности
+  $Q$ слева следует равенство при $t = 1$, т.е. $Q(u_1) = Q(u_2)$.
+
+  При $\alpha = u_1 < u_2$ имеем $f(u_1) = f(\alpha) = Q(\alpha)$. Отсюда почти
+  при всех $t \in [0, 1]$ выполнено $Q(t(u_2 - \alpha) + \alpha) = Q(\alpha)$.
+  Снова из непрерывности $Q$ слева получаем $Q(u_1) = Q(u_2) = Q(\alpha)$.
+
+  Доказательство при $u_1 < u_2 \leqslant \alpha$ получается аналогично с
+  заменой непрерывности слева на непрерывность справа. Так же рассматривается и
+  случай $u_1 < \alpha < u_2$. Таким образом \eqref{eq:fp:strategy:par:apostEq}
+  выполнено.
+\end{proof}
+
+\begin{lemma}
+  \label{lemma:f=Q}
+  Если $f(u_1) = f(u_2)$ при $u_1 < u_2$, то $f(u) = Q(u)$ при
+  $u \in [u_1, u_2]$.
+\end{lemma}
+\begin{proof}
+  Действительно, если $f(u_1) = f(u_2)$, то из леммы
+  \ref{lemma:fp:fQ:isStrategy} следует, что $f(\cdot)$ и $Q(\cdot)$ константны
+  на $[u_1, u_2]$. Тогда из \eqref{eq:f} для $f(u_2)$ имеем
+  \begin{align*}
+    f(u_2)
+    &= (u_2 - \alpha)^{-2} \int_\alpha^{u_2} 2 (x - \alpha) Q(x) \di x = \\
+    &= (u_2 - \alpha)^{-2} \left(
+      \int_\alpha^{u_1} 2 (x - \alpha) Q(x) \di x \, +
+      \int_{u_1}^{u_2} 2 (x - \alpha) Q(x) \di x
+      \right) = \\
+    &= (u_2 - \alpha)^{-2} \left(
+      (u_1 - \alpha)^2 f(u_1) +
+      \int_{u_1}^{u_2} 2 (x - \alpha) Q(u_1) \di x
+      \right) = \\
+    &= (u_2 - \alpha)^{-2} \left(
+      (u_1 - \alpha)^2 f(u_1) +
+      \left( (u_2 - \alpha)^2 - (u_2 - \alpha)^2 \right) Q(u_1)
+      \right).
+  \end{align*}
+  С другой стороны, для $f(u_1)$ справедливо
+  \begin{equation*}
+    f(u_1) = (u_2 - \alpha)^{-2} \left(
+      (u_1 - \alpha)^2 f(u_1) +
+      \left( (u_2 - \alpha)^2 - (u_2 - \alpha)^2 \right) f(u_1)
+    \right).
+  \end{equation*}
+  Таким образом, $f(u_1) = Q(u_1)$, а следовательно $f(u) = Q(u)$ при
+  $u \in [u_1, u_2]$.
+\end{proof}
+
+Обозначим $K(\lambda) = \int_0^1 V^*_{1,n}(1-\lambda-2u) \di u$. Тогда
+$K'(\lambda) = P$. Подставив \eqref{eq:qFormula}, \eqref{eq:lambdaCond} в
+\eqref{eq:phi(q)}, получим
+\begin{align*}
+  \Phi(Q) &= \lambda \int_0^1 Q(s) \di s + \int_0^1 \left[
+            (2s - 1 - \lambda) Q(s) + V_{1,n}\left( Q(s) \right)
+            \right] \di s = \\
+          &= P K^{*\prime}(P) - \int_0^1 \left[
+            (1 + \lambda - 2s) Q(s) + V_{1,n}\left( Q(s) \right)
+            \right] \di s = \\
+          &= P K^{*\prime}(P) - \int_0^1 V^*_{1,n}(1 + \lambda - 2s) \di s = \\
+          &= P K^{*\prime}(P) - K(\lambda) = P K^{*\prime}(P) - K(K^{*\prime}(P)) = K^*(P).
+\end{align*}
+
+Выше было использовано несколько свойств субидфференциалов замкнутых вогнутых
+функций, в частности эквивалентность следующих условий (см., например,
+[\ref{lit:rockafellar}, Теорема 23.5]):
+\begin{enumerate}[(a)]
+\item $x^* \in \partial f(x)$,
+\item $x \in \partial f^*(x^*)$,
+\item $\langle z, x^* \rangle - f(z)$ достигает минимума по $z$ в точке $x$.
+\end{enumerate}
+
+\begin{theorem}
+  Для выигрыша первого игрока в игре $G_n(P)$ справедлива оценка
+  $V_{1,n+1}(P) \geqslant K^*(P).$
+\end{theorem}
+\begin{proof}
+  Из леммы \ref{lemma:lowerBound:general} следует, что нам достаточно доказать,
+  что при любом $p_{2,1} \in [0, 1]$ выполнено $\F{p_{2,1}} \geqslant K^*(P)$.
+
+  Рассмотрим несколько случаев. Пусть $p_{2,1} < f(0)$. Тогда
+  \begin{align*}
+    &\F{p_{2,1}} = \int_0^1 \left[
+      Q(u) - \beta f(u) - \alpha p_{2,1}
+      \right] \di u \; + \\
+    &+ \int_0^1 V_{1,n}(Q(u)) \di u \geqslant \F{f(0)} = K^*(P).
+  \end{align*}
+  Аналогично можно показать, что при $p_{2,1} > f(1)$
+  \begin{equation*}
+    \F{p_{2,1}} \geqslant \F{f(0)} = K^*(p).
+  \end{equation*}
+  Пусть теперь $p_{2,1} = f(\gamma), \; \gamma \in [0, 1]$. Кроме того, введем обозначения
+  \[
+    \gamma^- = \inf \left\{ x \;|\; f(x) = f(\gamma) \right\}, \quad
+    \gamma^+ = \sup \left\{ x \;|\; f(x) = f(\gamma) \right\}.
+  \]
+  Тогда
+  \begin{equation}
+    \label{eq:fp:lower:gamma-0-1}
+    \begin{aligned}
+      \F{p_{2,1}}
+      &= \int_{\gamma^+}^1  (Q(u) - \beta f(u) - \alpha f(\gamma)) \di u \; + \\
+      &+ \int_0^{\gamma^-} (\alpha f(u) + \beta f(\gamma) - Q(u)) \di u \; + \\
+      &+ \int_0^1 V_{1,n}(Q(u)) \di u.
+    \end{aligned}
+  \end{equation}
+  Однако, из леммы \ref{lemma:f=Q} следует, что $Q(u) = f(\gamma)$ при
+  $u \in [\gamma^-, \gamma^+]$. А значит \eqref{eq:fp:lower:gamma-0-1} совпадает
+  с \eqref{eq:F:fBased} и $\F{p_{2,1}} \geqslant K^*(p)$ по построению.
+\end{proof}
 
 \section{Оценка сверху выигрыша второго игрока}
 
@@ -246,24 +501,26 @@ $\tilde{\sigma}$ -- семество стратегий в игре продолжительности $n-1$, зависящих
 \end{center}
 
 \begin{enumerate}
-\item\label{lit:demeyer02} De Meyer B., Saley H. \textit{On the strategic origin
-    of Brownian motion in finance} // Int J Game
-  Theory. 2002. V. 31. P. 285--319
+\item\label{lit:demeyer02}
+  De Meyer B., Saley H. \textit{On the strategic origin of Brownian motion in finance} // Int J Game Theory. 2002. V. 31. P. 285--319
 
-\item\label{lit:aumann} Aumann R.J., Maschler M.B. \textit{Repeated
-    Games with Incomplete Information}. The MIT Press, Cambridge,
-  London
+\item\label{lit:aumann}
+  Aumann R.J., Maschler M.B. \textit{Repeated Games with Incomplete Information}. The MIT Press, Cambridge, London
 
-\item\label{lit:domansky07} Domansky V. \textit{Repeated games with
-    asymmetric information and random price fluctuations at finance
-    markets} // Int J Game Theory. 2007. V. 36(2). P. 241--257
+\item\label{lit:domansky07}
+  Domansky V. \textit{Repeated games with asymmetric information and random price fluctuations at finance markets} // Int J Game Theory. 2007. V. 36(2). P. 241--257
 
-\item\label{lit:chatterjee83} Chatterjee K., Samuelson
-  W. \textit{Bargaining under Incomplete Information} // Operations
-  Research. 1983. V. 31. N. 5. P. 835--851
+\item\label{lit:chatterjee83}
+  Chatterjee K., Samuelson W. \textit{Bargaining under Incomplete Information} // Operations Research. 1983. V. 31. N. 5. P. 835--851
 
-\item\label{lit:pyanykh16} Пьяных А.И. Многошаговая модель биржевых
-  торгов с асимметричной информацией и элементами переговоров // TODO
+\item\label{lit:pyanykh16}
+  Пьяных А.И. \textit{Многошаговая модель биржевых торгов с асимметричной информацией и элементами переговоров} // TODO
+
+\item\label{lit:elsgolz}
+  Эльсгольц Л.Э. \textit{Дифференциальные уравнения и вариационное исчисление}. М.: Наука, 1965.
+
+\item\label{lit:rockafellar}
+  Рокафеллар Р. \textit{Выпуклый анализ}. М.: Мир, 1973.
 \end{enumerate}
 
 \makeenginfo
