@@ -40,7 +40,7 @@
 \newcommand*\di{\mathop{}\!\mathrm{d}}
 \newcommandx*\F[3][1={(f,Q)}, 2=n+1]{\ensuremath{F_{#2} \left( #1, #3 \right)}}
 \newcommand*\dualFPS{\ensuremath{(P, \; \sigma)}}
-\newcommandx*\dg[4][1=n, 2={\dualFPS}, 3=x, 4=\tau]{\ensuremath{g^*_{#1}(#3, #2, #4)}}
+\newcommandx*\dualg[4][1=n, 2={\dualFPS}, 3=x, 4=\tau]{\ensuremath{g^*_{#1}(#3, #2, #4)}}
 
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -194,7 +194,7 @@ g_n(P, \sigma, \tau) = \Exp_{\Pi[P, \sigma, \tau]} V(\pi_n),
 
 Приведем без доказательства следующую (см. [\ref{lit:demeyer02}]):
 \begin{lemma}
-  $V_{1,n}$ и $V_{2,n}$ -- вогнутые непрерывные функции $P$. Кроме того\normalfont{,}
+  $V_{1,n}(\cdot)$ и $V_{2,n}(\cdot)$ -- вогнутые непрерывные функции. Кроме того\normalfont{,}
   для любого $P \in [0, 1]$ выполняется неравенство
   \[
     0 \leqslant V_{1,n}(P) \leqslant V_{2,n}(P) \leqslant 2nP(1-P).
@@ -264,14 +264,14 @@ $f(u) = p_{1,1}$ и $Q(u) = P(f(u))$, что дает нам $\Pi[P, \sigma_1]$.
 
 \begin{lemma}
   $V_{1,n+1}(P) \geqslant \sup_{(f, Q)} \inf_{p_{2,1}} \F{p_{2,1}},$
-  где $(f, Q)$ удовлетворяют \eqref{eq:fp:strategy:par:inc} -- \eqref{eq:fp:strategy:par:apostEq} и
+  где
   \begin{equation}
     \label{eq:F:pBased}
     \begin{aligned}
       \F{p_{2,1}} &=
       \int_0^1 \Ind_{f(u) > p_{2,1}} (Q(u) - \beta f(u) - \alpha p_{2,1}) \di u \enskip + \\
       &+ \int_0^1 \Ind_{f(u) < p_{2,1}} (\alpha f(u) + \beta p_{2,1} - Q(u)) \di u \enskip + \\
-      &+ \int_0^1 V_{1,n}(Q(u)) \di u,
+      &+ \int_0^1 V_{1,n}(Q(u)) \di u.
     \end{aligned}
   \end{equation}
 \end{lemma}
@@ -501,14 +501,52 @@ $P \in [0, 1]$, а $\sigma$ -- стратегия в $G_n$. Множество стратегий второго
 
 Выигрыш второго игрока, который он стремится максимизировать, определяется как
 \begin{equation*}
-  \dg = x P - g_n(P, \sigma, \tau),
+  \dualg = x P - g_n(P, \sigma, \tau),
 \end{equation*}
 а верхнее и нижнее значения игры даются, соответственно, формулами
 \begin{equation*}
-  W_{1,n}(x) = \inf_{\dualFPS} \sup_\tau \dg, \quad
-  W_{2,n}(x) = \sup_\tau \inf_{\dualFPS} \dg.
+  W_{1,n}(x) = \inf_{\dualFPS} \sup_\tau \dualg, \enskip
+  W_{2,n}(x) = \sup_\tau \inf_{\dualFPS} \dualg.
 \end{equation*}
 
+Приведем без доказательства следующие результаты (см. [\ref{lit:demeyer02}]).
+\begin{lemma}
+  \label{lemma:W:subdiff}
+  $W_{2,n}(\cdot)$ -- вогнутая функция. Кроме того, для любого
+  $x \in \mathbb{R}$ выполнено $\partial W_{2,n}(x) \in [0, 1]$. В частности,
+  $W_{2,n}(\cdot)$ является липшицевой.
+\end{lemma}
+\begin{lemma}
+  \label{lemma:W:lowerBound:general}
+  Для любого $x \in \mathbb{R}$ выполняется неравенство
+  \begin{equation*}
+    W_{2,n+1} \geqslant \sup_{\tau_1} \inf_{p_{1,1}}
+      W_{2,n}(x - g^H_1(p_{1,1}, \tau_1 + g^L(p_{1,1}, \tau_1)) - g^L_1(p_{1,1}, \tau_1),
+  \end{equation*}
+  где $g^H_1(p_{1,1},\tau_1) = g_1(1, p_{1,1}, \tau_1)$ и
+  $g^L_1(p_{1,1},\tau_1) = g_1(0, p_{1,1}, \tau_1)$.
+\end{lemma}
+
+Аналогично тому, как это было сделано для первого игрока, параметризуем $\tau_1$
+при помощи неубывающей функции $h: [0, 1] \rightarrow [0, 1]$. Если случайная
+величина $u$ равномерно распределена на $[0, 1]$, положим $h(u) =
+p_{2,1}$. Подобным образом может быть получено любое распределение $\tau_1$.
+\begin{lemma}
+  \label{lemma:W:lowerBound:parametrized}
+  $W_{2,n+1} \geqslant \sup_h \inf_{p_{1,1}} G(p_{1,1}, h)$, где
+  \begin{equation}
+    \label{eq:W:lowerBound:parameterized}
+    \begin{aligned}
+    &G(p_{1,1}, h) = W_{2,n}\left(
+      x - \int_0^1(\Ind_{h(u) < p_{1,1}} - \Ind_{h(u) > p(u)}) \di u
+    \right) \; - \\
+    &- \int_0^1 \left[
+      \Ind_{h(u) < p_{1,1}} (-\beta p_{1,1} - \alpha h(u)) +
+      \Ind_{h(u) > p_{1,1}} (\alpha p_{1,1} + \beta h(u))
+    \right] \di u.\hspace{-.5em}
+    \end{aligned}
+  \end{equation}
+\end{lemma}
 
 \section{Значение игры}
 
