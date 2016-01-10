@@ -19,6 +19,7 @@
 \usepackage{bbm}
 \usepackage{xargs}
 \usepackage{enumerate}
+\usepackage{changepage}
 
 \usepackage{mgta}
 %%\sloppy
@@ -312,9 +313,9 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
 \end{enumerate}
 
 \subsection{Оценка $\mathbf{V_{1,n}\left(P\right)}$}\label{sec:-regular-game-estimate}
-Формула \eqref{eq:W:lowerBound:parameterized} дает способ получения нижней оценки $V_{1,n}(P)$, однако ее прямое использование представляет определенные трудности.
-В [\ref{lit:demeyer02}] рассматривается параметризация одношаговой стратегии инсайдера функциями $f$ и $Q$, которые используются для генерации маргинального распределения $p_{1,1}$ и апостериорной вероятности $P(p_{1,1})$ состояния $H$, соответственно, но не дается конструктивного обоснования использованию $f$ и $Q$ вместо $\sigma_1$.
-Далее мы покажем, что задание стратегии первого игрока при помощи пары $(f, Q)$ в некотором смысле естественно и обозначим способ перехода от параметризованного представления к оригинальному.
+Формула \eqref{eq:fp:lowerB:nonParameterized} дает способ получения нижней оценки $V_{1,n}(P)$, однако ее прямое использование представляет определенные трудности.
+В [\ref{lit:demeyer02}] рассматривается параметризация одношаговой стратегии инсайдера функциями $f$ и $Q$, которые используются для генерации маргинального распределения $p_{1,1}$ и апостериорной вероятности $P(p_{1,1})$, соответственно, но не дается конструктивного обоснования использованию $f$ и $Q$ вместо $\sigma_1$.
+Далее мы покажем, что задание стратегии первого игрока при помощи пары $(f, Q)$ в некотором смысле естественно и приведем способ перехода от параметризованного представления к оригинальному.
 
 Обозначим через $\sigma^M_1(p_{1,1}) = P \sigma^H_1(p_{1,1}) + (1-P) \sigma^L(p_{1,1})$ маргинальное распределение $p_{1,1}$.
 
@@ -328,15 +329,15 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
 \begin{proof}
   По определению $P(p_{1,1})$ для любого $B \in \mathcal{B}_I$ выполнено
   \begin{equation*}
-    P(\{s = H\} \cap \{p_{1,1} \in B\}) = \int_B P(p_{1,1}) \; \sigma^M_1(\di p_{1,1}).
+    P(s = H, \; p_{1,1} \in B) = \int_B P(p_{1,1}) \; \sigma^M_1(\di p_{1,1}).
   \end{equation*}
   С другой стороны справедлива следующая формула:
   \begin{equation*}
-    P(\{s = H\} \cap \{p_{1,1} \in B\}) = P \int_B \sigma^H_1(\di p_{1,1}).
+    P(s = H, \; p_{1,1} \in B) = P \int_B \sigma^H_1(\di p_{1,1}).
   \end{equation*}
   Так как $\sigma^H_1$ абсолютно непрерывна относительно $\sigma^M_1$, то существует производная Радона-Никодима, а значит
   \begin{equation*}
-    P(\{s = H\} \cap \{p_{1,1} \in B\}) =
+    P(s = H, \; p_{1,1} \in B) =
     \int_B (P \frac{\di \sigma^H_1}{\di \sigma^M_1})(p_{1,1}) \; \sigma^M_1(\di p_{1,1}).
   \end{equation*}
   Отсюда получаем \eqref{eq:aposter:p}.
@@ -381,57 +382,67 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
 Отсюда, воспользовавшись \eqref{eq:aposter:p}, получим \eqref{eq:g1:marginal:aposterior}.
 \end{proof}
 
-\textbf{Переписать эту секцию! Нужно связать параметризацию с формулой (3.2)}
+Формула \eqref{eq:g1:marginal:aposterior} показывает альтернативное представление стратегии инсайдера, а именно с помощью маргинального распределения ставки и апостериорной вероятности состояния $H$.
+Укажем способ перехода от $\sigma_1$ к альтернативному представлению.
 
-Стратегию инсайдера $\sigma_1$ можно отождествить с вероятностным распределением $\pi = \pi(s, p_{1,1})$ на $(S, I)$ таким, что $\pi(s = H) = P$.
-Любое такое распределение можно сгенерировать следующим образом.
 Возьмем случайную величину $u$ равномерно распределенную на $[0, 1]$.
-Пусть $f(\cdot)$ -- левая обратная функции распределения $p_{1,1}$.
-Тогда $f(u)$ и $p_{1,1}$ одинаково распределены.
-Кроме того $Q(u) = P(f(u))$.
-Тогда для любого $B \in \mathcal{B}_I$
+Если $f(\cdot)$ -- левая обратная функции распределения $p_{1,1}$, то $f(u)$ и $p_{1,1}$ одинаково распределены.
+Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
+Так как для любого $B \in \mathcal{B}_I$ выполнено
 \begin{equation*}
   \pi(p_{1,1} \in B \; | \; s = H) =
   \frac{\pi(p_{1,1} \in B, \; s = H)}{\pi(s = H)} =
-  \int_0^1 \Ind_{f(u) \in B} \frac{Q(u)}{P} \di u.
+  \int_0^1 \Ind_{f(u) \in B} \frac{Q(u)}{P} \di u,
 \end{equation*}
-
-Восстановить $\sigma_1$ по $(f, Q)$ можно следующим образом.
+то восстановить $\sigma_1$ по $(f, Q)$ можно следующим образом.
 Если ходом случая было выбрано состояние $H$, то инсайдер выбирает $u \in [0, 1]$ с плотностью вероятности $Q(u)/P$ и делает ставку $p_{1,1} = f(u)$.
-Аналогично для состояния $L$ он выбирает $u$ с плотностью вероятности $(1 - Q(u))/(1 - P)$ и делает ставку $p_{1,1} = f(u)$.
+Аналогично в состоянии $L$ он выбирает $u$ с плотностью вероятности $(1 - Q(u))/(1 - P)$ и делает ставку $p_{1,1} = f(u)$.
 
-Любое такое распределение может быть сгенерировано при помощи функций $f$ и $Q$ из $[0, 1]$ в $[0, 1]$, удовлетворающих следующим условиям:
-\begin{subequations}
-  \begin{flalign}
-    \label{eq:fp:strategy:par:inc}
-    \diamond \quad f \text{ -- не убывает на } [0, 1], &&
-  \end{flalign}
-  \vspace{-2.0em}
-  \begin{flalign}
-    \label{eq:fp:strategy:par:eqP}
-    \diamond \quad \int_0^1 Q(u) \di u = P, &&
-  \end{flalign}
-  \vspace{-1.5em}
-  \begin{flalign}
-    \label{eq:fp:strategy:par:apostEq}
-    \diamond \quad \forall x, y \in [0, 1]: f(x) = f(y) \implies Q(x) = Q(y). &&
-  \end{flalign}
-\end{subequations}
+Введем обозначение
+\[
+\F{p_{2,1}} = g_1(P, (f, Q), p_{2,1}) + \Exp V_{1,n}(Q(u)).
+\]
+Переходя к $f$ и $Q$ в формуле \eqref{eq:g1:marginal:aposterior} получим следующее равенство:
+\begin{equation}
+  \label{eq:F:pBased}
+  \begin{aligned}
+    \F{p_{2,1}} =
+    \int_0^1 \Ind_{f(u) > p_{2,1}} (Q(u) - \beta f(u) - \alpha p_{2,1}) \di u \enskip + \\
+    + \int_0^1 \Ind_{f(u) < p_{2,1}} (\alpha f(u) + \beta p_{2,1} - Q(u)) \di u \enskip
+    + \int_0^1 V_{1,n}(Q(u)) \di u.
+  \end{aligned}
+\end{equation}
 
+В [\ref{lit:demeyer02}] показано, что функции $f$ и $Q$ должны удовлетворять следующим свойствам, чтобы является параметризацией стратегии первого игрока:
+\vspace{-2em}
+\begin{adjustwidth}{\parindent}{0em}
+  \begin{subequations}
+    \begin{flalign}
+      \label{eq:fp:strategy:par:inc}
+      \bullet \quad f \text{ не убывает на } [0, 1], &&
+    \end{flalign}
+    \vspace{-2.5em}
+    \begin{flalign}
+      \label{eq:fp:strategy:par:eqP}
+      \bullet \quad \int_0^1 Q(u) \di u = P, &&
+    \end{flalign}
+    \vspace{-2.0em}
+    \begin{flalign}
+      \label{eq:fp:strategy:par:apostEq}
+      \bullet \quad \forall x, y \in [0, 1]: f(x) = f(y) \implies Q(x) = Q(y). &&
+    \end{flalign}
+  \end{subequations}
+\end{adjustwidth}
+
+Таким образом, мы можем переформулировать лемму \ref{lemma:lowerBound:general} в терминах $f$ и $Q$.
 \begin{lemma}
-  $V_{1,n+1}(P) \geqslant \sup_{(f, Q)} \inf_{p_{2,1}} \F{p_{2,1}},$
-  где
-  \begin{equation}
-    \label{eq:F:pBased}
-    \begin{aligned}
-      \F{p_{2,1}} =
-      \int_0^1 \Ind_{f(u) > p_{2,1}} (Q(u) - \beta f(u) - \alpha p_{2,1}) \di u \enskip + \\
-      + \int_0^1 \Ind_{f(u) < p_{2,1}} (\alpha f(u) + \beta p_{2,1} - Q(u)) \di u \enskip
-      + \int_0^1 V_{1,n}(Q(u)) \di u.
-    \end{aligned}
-  \end{equation}
+  Для любого $P \in [0, 1]$ выполняется неравенство
+  \[
+    V_{1,n+1}(P) \geqslant \sup_{(f, \; Q)} \inf_{p_{2,1}} \F{p_{2,1}},
+  \]
+  где $f$ и $Q$ удовлетворяют \eqref{eq:fp:strategy:par:inc} -- \eqref{eq:fp:strategy:par:apostEq}.
 \end{lemma}
-Доказательство получается подстановкой $f$ и $Q$ в \eqref{eq:fp:lowerB:nonParameterized}.
+
 
 Будем искать уравнивающую стратегию первого игрока. Пусть
 $p_{2,1} = f(\gamma), \; \gamma \in [0, 1]$ и $f(\cdot)$ строго возрастает в
