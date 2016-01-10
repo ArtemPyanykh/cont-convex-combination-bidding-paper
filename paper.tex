@@ -34,7 +34,7 @@
 %%%
 % Custom commands
 %%%
-\newcommand{\Ind}{\mathbbm{1}}
+\DeclareMathOperator*{\Ind}{\mathbbm{1}}
 \newcommand{\Exp}{\mathbb{E}}
 \newcommand{\Port}[1]{y_{#1}}
 \newcommand*\di{\mathop{}\!\mathrm{d}}
@@ -148,10 +148,10 @@ $\Co$ равен $1$. Обобщение дискретной модели на случай произвольного $\Co$
 Обозначим через $\Port{t} = (\Port{t}^R, \Port{t}^N)$ портфель первого игрока на $t$-ом шаге торгов, где $\Port{t}^R$ и $\Port{t}^N$ -- количество единиц рискового и безрискового активов соответственно.
 Если на $t$-ом шаге игроки делают ставки $p_{1,t} \in I, \: p_{2,t} \in I$, то портфель
 $\Port{t} = \Port{t-1} + t(p_{1,t}, p_{2,t})$, где при $\Co \in [0, 1], \; \Dco = 1 - \Co$
-\[
+\begin{equation}\label{eq:trans-mechanism}
   t(p_1, p_2) = \Ind_{p_1 > p_2} (1, -(\Co p_1 + \Dco p_2)) +
   \Ind_{p_1 < p_2} (-1, \Dco p_1 + \Co p_2),
-\]
+\end{equation}
 и $\Ind_{p_1 > p_2}$ принимает значение $1$ при $p_1 > p_2$ и $0$ в противном случае.
 То есть механизм проведения транзакции таков, что одна акция продается по цене равной выпуклой комбинации предложенных ставок с заданным коэффициентом $\Co$.
 Стоимость портфеля при этом равна
@@ -235,7 +235,7 @@ P(p_{1,1},p_{2,1}) = P(p_{1,1}) = \Pi[P, \sigma_1](s = H \; | \; p_{1,1})
   Для любого $P \in [0, 1]$ выполняется неравенство
   \begin{equation}
     \label{eq:fp:lowerB:nonParameterized}
-    V_{1,n+1}(P) \geqslant \max_{\sigma_1} \min_{p_{2,1}} g_1(P, \sigma_1, p_{2,1})
+    V_{1,n+1}(P) \geqslant \sup_{\sigma_1} \inf_{p_{2,1}} g_1(P, \sigma_1, p_{2,1})
     + \Exp_{\Pi[P, \sigma_1]} V_{1,n}(P(p_{1,1})).
   \end{equation}
 \end{lemma}
@@ -299,15 +299,108 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
 \item
   функция $W_{2,n}(\cdot)$ гладкая на $\mathbb{R}$.
 \end{enumerate}
-Справедливость данных предположений будет обоснована в разделе \ref{sec:-game-value}.
+Справедливость данных предположений будет обоснована в дальнейшем (см. раздел \ref{sec:-game-value}).
 
 Также отметим, что функции $V_{1,n}(\cdot)$ и $W_{2,n}(\cdot)$ являются вогнутыми на своей области определения.
 Доказательство данного факта может быть найдено в [\ref{lit:demeyer02}].
 
-\subsection{Оценка на $\mathbf{V_{1,n}\left(P\right)}$}\label{sec:-regular-game-estimate}
-Параметризуем стратегию $\sigma_1$ при помощи пары функций
-$(f, Q)$ из $[0, 1]$ в $[0, 1]$, удовлетворяющих:
+Кроме того, приведем несколько свойств субдифференциалов вогнутых функций, которые понадобятся нам в дальнейшем, а конкретно эквивалентность следующих условий (см. [\ref{lit:rockafellar}, Теорема 23.5]):
+\begin{enumerate}[(a)]
+\item $x^* \in \partial f(x)$,
+\item $x \in \partial f^*(x^*)$,
+\item $\langle z, x^* \rangle - f(z)$ достигает минимума по $z$ в точке $x$.
+\end{enumerate}
 
+\subsection{Оценка $\mathbf{V_{1,n}\left(P\right)}$}\label{sec:-regular-game-estimate}
+Формула \eqref{eq:W:lowerBound:parameterized} дает способ получения нижней оценки $V_{1,n}(P)$, однако ее прямое использование представляет определенные трудности.
+В [\ref{lit:demeyer02}] рассматривается параметризация одношаговой стратегии инсайдера функциями $f$ и $Q$, которые используются для генерации маргинального распределения $p_{1,1}$ и апостериорной вероятности $P(p_{1,1})$ состояния $H$, соответственно, но не дается конструктивного обоснования использованию $f$ и $Q$ вместо $\sigma_1$.
+Далее мы покажем, что задание стратегии первого игрока при помощи пары $(f, Q)$ в некотором смысле естественно и обозначим способ перехода от параметризованного представления к оригинальному.
+
+Обозначим через $\sigma^M_1(p_{1,1}) = P \sigma^H_1(p_{1,1}) + (1-P) \sigma^L(p_{1,1})$ маргинальное распределение $p_{1,1}$.
+
+\begin{utver}
+  Для апостериорной вероятности $P(p_{1,1})$ события $H$ справедлива формула
+  \begin{equation}\label{eq:aposter:p}
+    P(p_{1,1}) = (P \; \frac{\di \sigma^H_1}{\di \sigma^M_1})(p_{1,1}),
+  \end{equation}
+  где $\di \sigma^H_1/\di \sigma^M_1$ -- производная Радона-Никодима.
+\end{utver}
+\begin{proof}
+  По определению $P(p_{1,1})$ для любого $B \in \mathcal{B}_I$ выполнено
+  \begin{equation*}
+    P(\{s = H\} \cap \{p_{1,1} \in B\}) = \int_B P(p_{1,1}) \; \sigma^M_1(\di p_{1,1}).
+  \end{equation*}
+  С другой стороны справедлива следующая формула:
+  \begin{equation*}
+    P(\{s = H\} \cap \{p_{1,1} \in B\}) = P \int_B \sigma^H_1(\di p_{1,1}).
+  \end{equation*}
+  Так как $\sigma^H_1$ абсолютно непрерывна относительно $\sigma^M_1$, то существует производная Радона-Никодима, а значит
+  \begin{equation*}
+    P(\{s = H\} \cap \{p_{1,1} \in B\}) =
+    \int_B (P \frac{\di \sigma^H_1}{\di \sigma^M_1})(p_{1,1}) \; \sigma^M_1(\di p_{1,1}).
+  \end{equation*}
+  Отсюда получаем \eqref{eq:aposter:p}.
+\end{proof}
+
+\begin{utver}
+  Для $g_1(P, \sigma_1, p_{2,1})$ справедливо представление
+  \begin{equation}\label{eq:g1:marginal:aposterior}
+    \begin{aligned}
+      g_1(P, \sigma_1, p_{2,1}) &=
+      \int_I \Ind_{p_{1,1} > p_{2,1}} \biggl[
+      P(p_{1,1}) - \Co p_{1,1} - \Dco p_{2,1}
+      \biggr] \; \sigma^M_1(\di p_{1,1}) \; + \\
+      &+ \int_I \Ind_{p_{1,1} < p_{2,1}} \biggl[
+      \Dco p_{1,1} + \Co p_{2,1} - P(p_{1,1})
+      \biggr] \; \sigma^M_1(\di p_{1,1}).
+    \end{aligned}
+  \end{equation}
+\end{utver}
+\begin{proof}
+  По определению
+  \begin{equation}\label{eq:g1:def}
+    g_1(P, \sigma_1, p_{2,1}) = \Exp_{\Pi[P, \sigma_1]} \langle
+    (\Ind_{s = H}, 1), t(p_{1,1}, p_{2,1})
+    \rangle.
+  \end{equation}
+  Подставив \eqref{eq:trans-mechanism} в \eqref{eq:g1:def}, получим
+  \begin{equation}\label{eq:g1:expanded}
+    \begin{gathered}
+      g_1(P, \sigma_1, p_{2,1}) = P \int_I \biggl[
+      \Ind_{p_{1,1} > p_{2,1}}(1 - \Co p_{1,1} - \Dco p_{2,1}) +
+      \Ind_{p_{1,1} < p_{2,1}} \times \\
+      \times (\Dco p_{1,1} - \Co p_{2,1} - 1)
+      \biggr] \; \sigma^H_1(\di p_{1,1})
+      + (1-P) \int_I \biggl[
+      \Ind_{p_{1,1} > p_{2,1}} \times \\
+      (- \Co p_{1,1} - \Dco p_{2,1})
+      + \Ind_{p_{1,1} < p_{2,1}}(\Dco p_{1,1} - \Co p_{2,1})
+      \biggr] \; \sigma^L_1(\di p_{1,1}).
+    \end{gathered}
+\end{equation}
+Отсюда, воспользовавшись \eqref{eq:aposter:p}, получим \eqref{eq:g1:marginal:aposterior}.
+\end{proof}
+
+\textbf{Переписать эту секцию! Нужно связать параметризацию с формулой (3.2)}
+
+Стратегию инсайдера $\sigma_1$ можно отождествить с вероятностным распределением $\pi = \pi(s, p_{1,1})$ на $(S, I)$ таким, что $\pi(s = H) = P$.
+Любое такое распределение можно сгенерировать следующим образом.
+Возьмем случайную величину $u$ равномерно распределенную на $[0, 1]$.
+Пусть $f(\cdot)$ -- левая обратная функции распределения $p_{1,1}$.
+Тогда $f(u)$ и $p_{1,1}$ одинаково распределены.
+Кроме того $Q(u) = P(f(u))$.
+Тогда для любого $B \in \mathcal{B}_I$
+\begin{equation*}
+  \pi(p_{1,1} \in B \; | \; s = H) =
+  \frac{\pi(p_{1,1} \in B, \; s = H)}{\pi(s = H)} =
+  \int_0^1 \Ind_{f(u) \in B} \frac{Q(u)}{P} \di u.
+\end{equation*}
+
+Восстановить $\sigma_1$ по $(f, Q)$ можно следующим образом.
+Если ходом случая было выбрано состояние $H$, то инсайдер выбирает $u \in [0, 1]$ с плотностью вероятности $Q(u)/P$ и делает ставку $p_{1,1} = f(u)$.
+Аналогично для состояния $L$ он выбирает $u$ с плотностью вероятности $(1 - Q(u))/(1 - P)$ и делает ставку $p_{1,1} = f(u)$.
+
+Любое такое распределение может быть сгенерировано при помощи функций $f$ и $Q$ из $[0, 1]$ в $[0, 1]$, удовлетворающих следующим условиям:
 \begin{subequations}
   \begin{flalign}
     \label{eq:fp:strategy:par:inc}
@@ -324,8 +417,6 @@ $(f, Q)$ из $[0, 1]$ в $[0, 1]$, удовлетворяющих:
     \diamond \quad \forall x, y \in [0, 1]: f(x) = f(y) \implies Q(x) = Q(y). &&
   \end{flalign}
 \end{subequations}
-Если случайная величина $u$ равномерно распределена на $[0, 1]$, то положим
-$f(u) = p_{1,1}$ и $Q(u) = P(f(u))$, что дает нам $\Pi[P, \sigma_1]$.
 
 \begin{lemma}
   $V_{1,n+1}(P) \geqslant \sup_{(f, Q)} \inf_{p_{2,1}} \F{p_{2,1}},$
@@ -505,14 +596,7 @@ $K'(\lambda) = P$. Подставив \eqref{eq:qFormula}, \eqref{eq:lambdaCond} в
           &= P K^{*\prime}(P) - K(\lambda) = P K^{*\prime}(P) - K(K^{*\prime}(P)) = K^*(P).
 \end{align*}
 
-Выше было использовано несколько свойств субдифференциалов замкнутых вогнутых
-функций, в частности эквивалентность следующих условий (см., например,
-[\ref{lit:rockafellar}, Теорема 23.5]):
-\begin{enumerate}[(a)]
-\item $x^* \in \partial f(x)$,
-\item $x \in \partial f^*(x^*)$,
-\item $\langle z, x^* \rangle - f(z)$ достигает минимума по $z$ в точке $x$.
-\end{enumerate}
+
 
 \begin{theorem}
   Для выигрыша первого игрока в игре $G_n(P)$ справедлива оценка
@@ -553,7 +637,7 @@ $K'(\lambda) = P$. Подставив \eqref{eq:qFormula}, \eqref{eq:lambdaCond} в
   с \eqref{eq:F:fBased} и $\F{p_{2,1}} \geqslant K^*(p)$ по построению.
 \end{proof}
 
-\subsection{Оценка на $\mathbf{W_{2,n}\left(x\right)}$}\label{sec:-dual-game-estimate}
+\subsection{Оценка $\mathbf{W_{2,n}\left(x\right)}$}\label{sec:-dual-game-estimate}
 Аналогично тому, как это было сделано для первого игрока, параметризуем $\tau_1$
 при помощи неубывающей функции $h: [0, 1] \rightarrow [0, 1]$. Если случайная
 величина $u$ равномерно распределена на $[0, 1]$, положим $h(u) =
