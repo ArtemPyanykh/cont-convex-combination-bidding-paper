@@ -43,7 +43,7 @@
 \newcommand*\dualFPS{\ensuremath{(P, \; \sigma)}}
 \newcommandx*\dualg[4][1=n, 2={\dualFPS}, 3=x, 4=\tau]{\ensuremath{g^*_{#1}(#3, #2, #4)}}
 \newcommand{\Co}{\ensuremath{\beta}}
-\newcommand{\Dco}{\overline{\Co}}
+\newcommand{\Dco}{\ensuremath{{\overline{\Co}}}}
 \newcommand*\Tau{\ensuremath{\mathrm{T}}}
 
 \begin{document}
@@ -402,7 +402,7 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 \[
 \F{p_{2,1}} = g_1(P, (f, Q), p_{2,1}) + \Exp V_{1,n}(Q(u)).
 \]
-Переходя к $f$ и $Q$ в формуле \eqref{eq:g1:marginal:aposterior} получим следующее равенство:
+Переходя к $f$ и $Q$ в формуле \eqref{eq:g1:marginal:aposterior} получаем следующее равенство:
 \begin{equation}
   \label{eq:F:pBased}
   \begin{aligned}
@@ -444,46 +444,58 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 \end{lemma}
 
 
-Будем искать уравнивающую стратегию первого игрока. Пусть
-$p_{2,1} = f(\gamma), \; \gamma \in [0, 1]$ и $f(\cdot)$ строго возрастает в
-$\gamma$. Тогда
+Будем искать $S$-выравнивающую стратегию первого игрока, при $S = [f(0), f(1)]$.
+Пусть $p_{2,1} = f(\alpha), \; \alpha \in [0, 1]$ и $f(\cdot)$ строго возрастает в $\alpha$.
+Тогда
 \begin{equation}
   \label{eq:F:fBased}
   \begin{aligned}
-    \F{f(\gamma)} &= \int_\gamma^1 \left(
-      Q(u) - \beta f(u) - \alpha f(\gamma)
+    &\F{f(\alpha)} = \int_\alpha^1 \left(
+      Q(u) - \Co f(u) - \Dco f(\alpha)
     \right) \di u \; + \\
-    & + \int_0^\gamma \left(
-      \alpha f(u) + \beta f(\gamma) - Q(u)
-    \right) \di u \; + \\
-    & + \int_0^1 V_{1,n}(Q(u)) \di u.
+    & + \int_0^\alpha \left(
+      \Dco f(u) + \Co f(\alpha) - Q(u)
+    \right) \di u
+    + \int_0^1 V_{1,n}(Q(u)) \di u.
   \end{aligned}
 \end{equation}
 
-По предположению $\F{f(\gamma)}$ не зависит от $\gamma$, следовательно
+По предположению $\F{f(\alpha)}$ не зависит от $\alpha$, следовательно
 \begin{align*}
-  \frac{\partial F_{n+1}}{\partial \gamma}
-  = (\gamma - \alpha) f'(\gamma) + 2 f(\gamma) - 2 Q(\gamma)
+  \frac{\partial F_{n+1}}{\partial \alpha}
+  = (\alpha - \Dco) f'(\alpha) + 2 f(\alpha) - 2 Q(\alpha)
   = 0.
 \end{align*}
 Отсюда
 \begin{equation}
   \label{eq:f}
-  f(u) = (u - \alpha)^{-2} \int_\alpha^u 2(x-\alpha) Q(x) \di x.\footnotemark
+  f(u) = (u - \Dco)^{-2} \int_{\Dco}^u 2(x-\Dco) Q(x) \di x.\footnotemark
   \footnotetext{
-    При $u = \alpha$ доопределим $f(\alpha)$ по непрерывности как $Q(\alpha)$.
+    При $u = \Dco$ доопределим $f(\Dco)$ по непрерывности как $Q(\Dco)$.
   }
 \end{equation}%
 
-Подставив \eqref{eq:f} в \eqref{eq:F:fBased} при $\gamma = 1$ получим
-\begin{equation}
-  \label{eq:phi(q)}
-  \begin{aligned}
-    \Phi(Q)
-    &= \F[(f(u), Q)]{f(1)} = \\
-    &= \int_0^1 (2s - 1) Q(s) \di s + \int_0^1 V_{1,n}(Q(u)) \di u.
-  \end{aligned}
+Очевидно, если подставить \eqref{eq:f} в \eqref{eq:F:fBased}, то получившееся выражение $\Phi(Q)$ зависит только от $Q$ и не зависит от $\alpha$:
+
+\begin{equation}\label{eq:phi:raw}
+  \begin{gathered}
+    \Phi(Q) =
+    \int_0^1 (\Dco f(u) - Q(u)) \di u + \Co f(1) + \int_0^1 V_{1,n}(Q(u)) \di u.
+  \end{gathered}
 \end{equation}
+
+\begin{lemma}
+  Для $\Phi(Q)$ справедливо следующее выражение:
+  \begin{equation}\label{eq:phi(q)}
+    \Phi(Q) = \int_0^1 (2u - 1) Q(u) \di u + \int_0^1 V_{1,n}(Q(u)) \di u.
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  Упростим \eqref{eq:phi:raw} при $\Co \in (0, 1)$.
+  Случаи $\Co = 0$ и $\Co = 1$ дают тот же результат и рассматриваются аналогично.
+
+  \textbf{TODO: Написать доказательство, расписать двойные интегралы, etc.}
+\end{proof}
 
 Найдем $Q$ как решение изопериметрической вариационной задачи
 \begin{align}
