@@ -475,8 +475,8 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
   }
 \end{equation}%
 
-Очевидно, если подставить \eqref{eq:f} в \eqref{eq:F:fBased}, то получившееся выражение $\Phi(Q)$ зависит только от $Q$ и не зависит от $\alpha$:
-
+Очевидно, если подставить \eqref{eq:f} в \eqref{eq:F:fBased}, то получившееся выражение $\Phi(Q)$ зависит только от $Q$ и не зависит от $\alpha$.
+Подставив $1$ вместо $\alpha$, получим
 \begin{equation}\label{eq:phi:raw}
   \begin{gathered}
     \Phi(Q) =
@@ -494,8 +494,29 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
   Упростим \eqref{eq:phi:raw} при $\Co \in (0, 1)$.
   Случаи $\Co = 0$ и $\Co = 1$ дают тот же результат и рассматриваются аналогично.
 
-  \textbf{TODO: Написать доказательство, расписать двойные интегралы, etc.}
+  Найдем чему равно выражение $\int_0^1 f(u) \di u$, разбив этот интеграл на две части.
+  Для первой части:
+  \begin{align*}
+    &\int_0^\Dco f(u) \di u = \int_0^\Dco (u - \Dco)^{-2} \int_\Dco^u 2(s - \Dco) Q(s) \di s = \\
+    &= \int_0^\Dco 2 (\Dco - s) Q(s) \int_0^s (\Dco - u)^{-2} \di u \di s =
+      (2/\Dco) \int_0^\Dco u Q(u) \di u.
+  \end{align*}
+
+  Аналогично для второй части:
+  \begin{gather*}
+    \int_\Dco^1 f(u) \di u = (2/\Co) \int_\Dco^1 (1-u) Q(u) \di u.
+  \end{gather*}
+
+  Подставив найденные выражения в \eqref{eq:phi:raw}, получим
+  \begin{align*}
+    &\Phi(Q) = 2 \int_0^\Dco u Q(u) \di u + (2\Dco/\Co) \int_\Dco^1 (1-u) Q(u) \di u \; + \\
+    &+ (2/\Co) \int_\Dco^1 (u - \Dco) Q(u) \di u -
+      \int_0^1 Q(u) \di u + \int_0^1 V_{1,n}(Q(u)) \di u.
+  \end{align*}
+
+  Приведя подобные с учетом того, что $\Dco (1-u) + u - \Dco = \Co u$, получим \eqref{eq:phi(q)}.
 \end{proof}
+Отметим, что хотя $f(u)$, то есть механизм рандомизации ставки инсайдером, зависит от коэффициента $\Co$, $\Phi(Q)$ от $\Co$ не зависит и по форме совпадает с аналогичным выражением в [\ref{lit:demeyer02}].
 
 Найдем $Q$ как решение изопериметрической вариационной задачи
 \begin{align}
@@ -515,15 +536,11 @@ $f(\cdot)$ -- вогнутая и ограниченная, ее субдифференциал $\partial f(\cdot)$ не
 \eqref{eq:qProblem} в следующем виде:
 \begin{align}
   \label{eq:qFormula}
-  &Q(u) = V^{*\prime}_{1,n}(1-\lambda-2u), \text{ где}\footnotemark\\
+  &Q(u) = V^{*\prime}_{1,n}(1-\lambda-2u), \text{ где}\\
     %
   \label{eq:lambdaCond}
   &\int_0^1 V^{*\prime}_{1,n}(1-\lambda-2u) \di u = P,
 \end{align}
-\footnotetext{
-  Через $f^*(x^*) = \inf_x \left\{ x \cdot x^* - f(x) \right \}$ обозначена
-  сопряженная к $f(\cdot)$ функция.%
-}
 
 Так как $V_{1,n}(\cdot)$ определена на $[0, 1]$, то $V^{*\prime}_{1,n}(\cdot)$
 не возрастает на $\mathbb{R}$ от $1$ до $0$. Следовательно $\lambda$, удовлетворяющая
@@ -577,7 +594,7 @@ $V^{*\prime}_{1,n}(\cdot)$ таким образом, чтобы $Q(u)$ была непрерывной справа
 \begin{proof}
   Действительно, если $f(u_1) = f(u_2)$, то из леммы
   \ref{lemma:fp:fQ:isStrategy} следует, что $f(\cdot)$ и $Q(\cdot)$ константны
-  на $[u_1, u_2]$. Тогда из \eqref{eq:f} для $f(u_2)$ имеем
+  на $[u_1, u_2]$. Тогда из \eqref{eq:f} имеем
   \begin{align*}
     f(u_2)
     &= (u_2 - \alpha)^{-2} \int_\alpha^{u_2} 2 (x - \alpha) Q(x) \di x = \\
