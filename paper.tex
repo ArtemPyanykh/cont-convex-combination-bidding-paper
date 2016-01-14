@@ -315,7 +315,7 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
 \item $\langle z, x^* \rangle - f(z)$ достигает минимума по $z$ в точке $x$.
 \end{enumerate}
 
-Во-вторых, связь между эффективным множеством функции и образом субдифференкциала сопряженной функции.
+Во-вторых, связь между эффективным множеством функции и образом субдифференциала сопряженной функции.
 Обозначим эффективное множество через $\dom f = \{ x \; | \; f(x) < \infty \}$, а образ функции через $\range f = \cup \; \{ f(x) \; | \; x \}$.
 Тогда для функций в $\mathbb{R}$ имет место следующее включение (см. [\ref{lit:rockafellar}, \S 24]):
 \begin{equation}\label{eq:dualrange}
@@ -332,7 +332,7 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
 \begin{utver}
   Для апостериорной вероятности $P(p_{1,1})$ события $H$ справедлива формула
   \begin{equation}\label{eq:aposter:p}
-    P(p_{1,1}) = (P \; \frac{\di \sigma^H_1}{\di \sigma^M_1})(p_{1,1}),
+    P(p_{1,1}) = P \; \frac{\di \sigma^H_1}{\di \sigma^M_1}(p_{1,1}),
   \end{equation}
   где $\di \sigma^H_1/\di \sigma^M_1$ -- производная Радона-Никодима.
 \end{utver}
@@ -348,7 +348,7 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
   Так как $\sigma^H_1$ абсолютно непрерывна относительно $\sigma^M_1$, то существует производная Радона-Никодима, а значит
   \begin{equation*}
     P(s = H, \; p_{1,1} \in B) =
-    \int_B (P \frac{\di \sigma^H_1}{\di \sigma^M_1})(p_{1,1}) \; \sigma^M_1(\di p_{1,1}).
+    \int_B P \frac{\di \sigma^H_1}{\di \sigma^M_1}(p_{1,1}) \; \sigma^M_1(\di p_{1,1}).
   \end{equation*}
   Отсюда получаем \eqref{eq:aposter:p}.
 \end{proof}
@@ -375,7 +375,7 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
     \rangle.
   \end{equation}
   Подставив \eqref{eq:trans-mechanism} в \eqref{eq:g1:def}, получим
-  \begin{equation}\label{eq:g1:expanded}
+  \begin{equation*}}
     \begin{gathered}
       g_1(P, \sigma_1, p_{2,1}) = P \int_I \biggl[
       \Ind_{p_{1,1} > p_{2,1}}(1 - \Co p_{1,1} - \Dco p_{2,1}) +
@@ -388,7 +388,7 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
       + \Ind_{p_{1,1} < p_{2,1}}(\Dco p_{1,1} - \Co p_{2,1})
       \biggr] \; \sigma^L_1(\di p_{1,1}).
     \end{gathered}
-\end{equation}
+\end{equation*}
 Отсюда, воспользовавшись \eqref{eq:aposter:p}, получим \eqref{eq:g1:marginal:aposterior}.
 \end{proof}
 
@@ -526,8 +526,6 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 
   Приведя подобные с учетом того, что $\Dco (1-u) + u - \Dco = \Co u$, получим \eqref{eq:phi(q)}.
 \end{proof}
-Отметим, что хотя $f(u)$, то есть механизм рандомизации ставки инсайдером, зависит от коэффициента $\Co$, $\Phi(Q)$ от $\Co$ не зависит и по форме совпадает с аналогичным выражением в [\ref{lit:demeyer02}].
-\textbf{TODO: добавить сюда некоторый вывод, просто констатации факта маловато}.
 
 Найдем $Q$ как экстремаль следующей вариационной задачи:
 \begin{align}
@@ -554,6 +552,13 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 Так как $V_{1,n}(\cdot)$ определена на $[0, 1]$, то из \eqref{eq:dualrange} следует, что $V^{*\prime}_{1,n}(\cdot)$ не возрастает на $\mathbb{R}$ от $1$ до $0$.
 Значит $\lambda$, удовлетворяющая
 \eqref{eq:lambdaCond}, существует.
+
+Обозначим $K(\lambda) = \int_0^1 V^*_{1,n}(1-\lambda-2u) \di u$.
+Тогда, аналогично [\ref{lit:demeyer02}] можно показать, что при подстановке \eqref{eq:qFormula} в \eqref{eq:phi(q)} выполняется равенство $\Phi(Q) = K^*(P)$.
+
+Отметим, что хотя $f(u)$, то есть механизм рандомизации ставки инсайдером, зависит от коэффициента $\Co$, функции $Q(u)$ и $\Phi(Q)$ от $\Co$ не зависят и по форме совпадают с аналогичными выражениями в [\ref{lit:demeyer02}].
+Данный факт позволит нам без изменений использовать те же самые соотношения между нижним и верхним значениями прямой и двойственной игр.
+Прежде, однако, нужно показать, что полученные $f$ и $Q$ действительно удовлетворяют \eqref{eq:fp:strategy:par:inc} -- \eqref{eq:fp:strategy:par:apostEq} и доставляют гарантированный выигрыш первого игрока, равный $K^*(P)$.
 
 \begin{lemma}
   \label{lemma:fp:fQ:isStrategy}
@@ -629,19 +634,6 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
   $u \in [u_1, u_2]$.
 \end{proof}
 
-Обозначим $K(\lambda) = \int_0^1 V^*_{1,n}(1-\lambda-2u) \di u$. Тогда
-$K'(\lambda) = P$. Подставив \eqref{eq:qFormula}, \eqref{eq:lambdaCond} в
-\eqref{eq:phi(q)}, получим
-\begin{align*}
-  \Phi(Q) &= \lambda \int_0^1 Q(s) \di s + \int_0^1 \left[
-            (2s - 1 - \lambda) Q(s) + V_{1,n}\left( Q(s) \right)
-            \right] \di s = \\
-          &= P K^{*\prime}(P) - \int_0^1 \left[
-            (1 + \lambda - 2s) Q(s) + V_{1,n}\left( Q(s) \right)
-            \right] \di s = \\
-          &= P K^{*\prime}(P) - \int_0^1 V^*_{1,n}(1 + \lambda - 2s) \di s = \\
-          &= P K^{*\prime}(P) - K(\lambda) = P K^{*\prime}(P) - K(K^{*\prime}(P)) = K^*(P).
-\end{align*}
 
 
 
