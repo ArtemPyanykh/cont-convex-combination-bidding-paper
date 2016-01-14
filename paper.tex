@@ -242,7 +242,7 @@ P(p_{1,1},p_{2,1}) = P(p_{1,1}) = \Pi[P, \sigma_1](s = H \; | \; p_{1,1})
     + \Exp_{\Pi[P, \sigma_1]} V_{1,n}(P(p_{1,1})).
   \end{equation}
 \end{lemma}
-Подчеркнем, что так как значение игры нулевой продолжительности $V_0(P) = 0$, данная формула имеет смысл для любого $n$.
+Подчеркнем, что так как значение игры нулевой продолжительности $V_0(P) = 0$, данная формула имеет смысл для любого $n \geqslant 1$.
 
 \subsection{Двойственная игра}
 Следуя [\ref{lit:demeyer02}], определим двойственную игру $G^*_n(x)$ следующим образом.
@@ -282,7 +282,7 @@ P(p_{1,1},p_{2,1}) = P(p_{1,1}) = \Pi[P, \sigma_1](s = H \; | \; p_{1,1})
 \end{lemma}
 Отметим, что так как
 $W^*_0(x) = \phi(x) = \min(x, 0)$,
-формула имеет смысл для любого $n$.
+формула имеет смысл для любого $n \geqslant 1$.
 
 \section{Оценки на выигрыш в прямой и двойственной играх}
 Обозначим схему дальнеших рассуждений.
@@ -375,7 +375,7 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
     \rangle.
   \end{equation}
   Подставив \eqref{eq:trans-mechanism} в \eqref{eq:g1:def}, получим
-  \begin{equation*}}
+  \begin{equation*}
     \begin{gathered}
       g_1(P, \sigma_1, p_{2,1}) = P \int_I \biggl[
       \Ind_{p_{1,1} > p_{2,1}}(1 - \Co p_{1,1} - \Dco p_{2,1}) +
@@ -553,7 +553,10 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 Значит $\lambda$, удовлетворяющая
 \eqref{eq:lambdaCond}, существует.
 
-Обозначим $K(\lambda) = \int_0^1 V^*_{1,n}(1-\lambda-2u) \di u$.
+Введем обозначение
+\begin{equation*}
+  K(\lambda) = \int_0^1 V^*_{1,n}(1-\lambda-2u) \di u.
+\end{equation*}
 Тогда, аналогично [\ref{lit:demeyer02}] можно показать, что при подстановке \eqref{eq:qFormula} в \eqref{eq:phi(q)} выполняется равенство $\Phi(Q) = K^*(P)$.
 
 Отметим, что хотя $f(u)$, то есть механизм рандомизации ставки инсайдером, зависит от коэффициента $\Co$, функции $Q(u)$ и $\Phi(Q)$ от $\Co$ не зависят и по форме совпадают с аналогичными выражениями в [\ref{lit:demeyer02}].
@@ -565,37 +568,36 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
   Пара функций $(f, Q)$\textnormal{,} определенная в \eqref{eq:f}\textnormal{,}
   \eqref{eq:qFormula} принимает значения в $[0, 1]$ и удовлетворяет
   \eqref{eq:fp:strategy:par:inc} -- \eqref{eq:fp:strategy:par:apostEq},
-  т.е. является корректной параметризацией стратегии первого игрока.
+  т.е. является параметризацией стратегии первого игрока.
 \end{lemma}
 \begin{proof}
   Так как $V^{*\prime}_{1,n}(\cdot)$ убывает от $1$ до $0$, то
   $Q(\cdot)$ принимает значения в $[0, 1]$ и, кроме того, не убывает на $[0, 1]$.
 
   Далее, можно заметить, что $f(u)$ является математическим ожиданием $Q(x)$,
-  где $x$ -- случайная величина распределенная между $\alpha$ и $u$ с плотностью
-  $2|x-\alpha|/(u-\alpha)^2$. Следовательно, $f(\cdot)$ также принимает значения
+  где $x$ -- случайная величина распределенная между $\Dco$ и $u$ с плотностью
+  $2|x-\Dco|/(u-\Dco)^2$. Следовательно, $f(\cdot)$ также принимает значения
   в $[0, 1]$.
 
-  Сделаем замену переменного $t = (x - \alpha)/(u - \alpha)$  в \eqref{eq:f}. Тогда
+  Сделаем замену переменного $t = (x - \Dco)/(u - \Dco)$  в \eqref{eq:f}. Тогда
   \begin{equation*}
-    f(u) = \int_0^1 2 t Q \left( t(u - \alpha) + \alpha \right) \di t.
+    f(u) = \int_0^1 2 t Q \left( t(u - \Dco) + \Dco \right) \di t.
   \end{equation*}
   Отсюда видно, что \eqref{eq:fp:strategy:par:inc} выполнено. Далее,
   \eqref{eq:fp:strategy:par:eqP} выполнено по построению. Чтобы показать, что
   \eqref{eq:fp:strategy:par:apostEq} выполняется, рассмотрим несколько случаев.
 
-  Пусть $\alpha < u_1 < u_2$. Тогда, так как $Q$ не убывает, почти при всех
+  Пусть $\Dco < u_1 < u_2$. Тогда, так как $Q$ не убывает, почти при всех
   $t \in [0, 1]$ выполнено
-  $ Q(t(u_1 - \alpha) + \alpha) = Q(t(u_2 - \alpha) + \alpha)$. Из непрерывности
-  $Q$ слева следует равенство при $t = 1$, т.е. $Q(u_1) = Q(u_2)$.
+  $ Q(t(u_1 - \Dco) + \Dco) = Q(t(u_2 - \Dco) + \Dco)$. Из непрерывности
+  $Q$ следует равенство при $t = 1$, т.е. $Q(u_1) = Q(u_2)$.
 
-  При $\alpha = u_1 < u_2$ имеем $f(u_1) = f(\alpha) = Q(\alpha)$. Отсюда почти
-  при всех $t \in [0, 1]$ выполнено $Q(t(u_2 - \alpha) + \alpha) = Q(\alpha)$.
-  Снова из непрерывности $Q$ слева получаем $Q(u_1) = Q(u_2) = Q(\alpha)$.
+  При $\Dco = u_1 < u_2$ имеем $f(u_1) = f(\Dco) = Q(\Dco)$. Отсюда почти
+  при всех $t \in [0, 1]$ выполнено $Q(t(u_2 - \Dco) + \Dco) = Q(\Dco)$.
+  Снова из непрерывности $Q$ получаем $Q(u_1) = Q(u_2) = Q(\Dco)$.
 
-  Доказательство при $u_1 < u_2 \leqslant \alpha$ получается аналогично с
-  заменой непрерывности слева на непрерывность справа. Так же рассматривается и
-  случай $u_1 < \alpha < u_2$. Таким образом \eqref{eq:fp:strategy:par:apostEq}
+  Доказательство при $u_1 < u_2 \leqslant \Dco$ получается аналогично. Так же рассматривается и
+  случай $u_1 < \Dco < u_2$. Таким образом \eqref{eq:fp:strategy:par:apostEq}
   выполнено.
 \end{proof}
 
@@ -609,70 +611,69 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
   на $[u_1, u_2]$. Тогда из \eqref{eq:f} имеем
   \begin{align*}
     f(u_2)
-    &= (u_2 - \alpha)^{-2} \int_\alpha^{u_2} 2 (x - \alpha) Q(x) \di x = \\
-    &= (u_2 - \alpha)^{-2} \left(
-      \int_\alpha^{u_1} 2 (x - \alpha) Q(x) \di x \, +
-      \int_{u_1}^{u_2} 2 (x - \alpha) Q(x) \di x
+    &= (u_2 - \Dco)^{-2} \int_\Dco^{u_2} 2 (x - \Dco) Q(x) \di x = \\
+    &= (u_2 - \Dco)^{-2} \left(
+      \int_\Dco^{u_1} 2 (x - \Dco) Q(x) \di x \, +
+      \int_{u_1}^{u_2} 2 (x - \Dco) Q(x) \di x
       \right) = \\
-    &= (u_2 - \alpha)^{-2} \left(
-      (u_1 - \alpha)^2 f(u_1) +
-      \int_{u_1}^{u_2} 2 (x - \alpha) Q(u_1) \di x
+    &= (u_2 - \Dco)^{-2} \left(
+      (u_1 - \Dco)^2 f(u_1) +
+      \int_{u_1}^{u_2} 2 (x - \Dco) Q(u_1) \di x
       \right) = \\
-    &= (u_2 - \alpha)^{-2} \left(
-      (u_1 - \alpha)^2 f(u_1) +
-      \left( (u_2 - \alpha)^2 - (u_2 - \alpha)^2 \right) Q(u_1)
+    &= (u_2 - \Dco)^{-2} \left(
+      (u_1 - \Dco)^2 f(u_1) +
+      \left( (u_2 - \Dco)^2 - (u_2 - \Dco)^2 \right) Q(u_1)
       \right).
   \end{align*}
   С другой стороны, для $f(u_1)$ справедливо
   \begin{equation*}
-    f(u_1) = (u_2 - \alpha)^{-2} \left(
-      (u_1 - \alpha)^2 f(u_1) +
-      \left( (u_2 - \alpha)^2 - (u_2 - \alpha)^2 \right) f(u_1)
+    f(u_1) = (u_2 - \Dco)^{-2} \left(
+      (u_1 - \Dco)^2 f(u_1) +
+      \left( (u_2 - \Dco)^2 - (u_2 - \Dco)^2 \right) f(u_1)
     \right).
   \end{equation*}
   Таким образом, $f(u_1) = Q(u_1)$, а следовательно $f(u) = Q(u)$ при
   $u \in [u_1, u_2]$.
 \end{proof}
 
-
-
-
 \begin{theorem}
-  Для выигрыша первого игрока в игре $G_n(P)$ справедлива оценка
+  Для гарантированного выигрыша первого игрока в игре $G_n(P)$ справедлива оценка
   $V_{1,n+1}(P) \geqslant K^*(P).$
 \end{theorem}
 \begin{proof}
   Из леммы \ref{lemma:lowerBound:general} следует, что нам достаточно доказать,
   что при любом $p_{2,1} \in [0, 1]$ выполнено $\F{p_{2,1}} \geqslant K^*(P)$.
+  Рассмотрим несколько случаев.
 
-  Рассмотрим несколько случаев. Пусть $p_{2,1} < f(0)$. Тогда
+  Пусть $p_{2,1} < f(0)$.
+  Тогда из \eqref{eq:F:pBased} получаем, что справделиво следующее неравенство
   \begin{align*}
     &\F{p_{2,1}} = \int_0^1 \left[
-      Q(u) - \beta f(u) - \alpha p_{2,1}
+      Q(u) - \Co f(u) - \Dco p_{2,1}
       \right] \di u \; + \\
     &+ \int_0^1 V_{1,n}(Q(u)) \di u \geqslant \F{f(0)} = K^*(P).
   \end{align*}
   Аналогично можно показать, что при $p_{2,1} > f(1)$
   \begin{equation*}
-    \F{p_{2,1}} \geqslant \F{f(0)} = K^*(p).
+    \F{p_{2,1}} \geqslant \F{f(1)} = K^*(p).
   \end{equation*}
-  Пусть теперь $p_{2,1} = f(\gamma), \; \gamma \in [0, 1]$. Кроме того, введем обозначения
+  Пусть теперь $p_{2,1} = f(\alpha), \; \alpha \in [0, 1]$.
+  Введем обозначения
   \[
-    \gamma^- = \inf \left\{ x \;|\; f(x) = f(\gamma) \right\}, \quad
-    \gamma^+ = \sup \left\{ x \;|\; f(x) = f(\gamma) \right\}.
+    \alpha^- = \inf \left\{ x \;|\; f(x) = f(\alpha) \right\}, \quad
+    \alpha^+ = \sup \left\{ x \;|\; f(x) = f(\alpha) \right\}.
   \]
-  Тогда
-  \begin{equation}
-    \label{eq:fp:lower:gamma-0-1}
+  Подстановкой в \eqref{eq:F:pBased} получаем
+  \begin{equation}\label{eq:fp:lower:alpha-0-1}
     \begin{aligned}
-      \F{p_{2,1}}
-      &= \int_{\gamma^+}^1  (Q(u) - \beta f(u) - \alpha f(\gamma)) \di u \; + \\
-      &+ \int_0^{\gamma^-} (\alpha f(u) + \beta f(\gamma) - Q(u)) \di u \; + \\
-      &+ \int_0^1 V_{1,n}(Q(u)) \di u.
+      &\F{p_{2,1}} =
+      \int_{\alpha^+}^1  (Q(u) - \Co f(u) - \Dco f(\alpha)) \di u \; + \\
+      &+ \int_0^{\alpha^-} (\Dco f(u) + \Co f(\alpha) - Q(u)) \di u \; +
+      \int_0^1 V_{1,n}(Q(u)) \di u.
     \end{aligned}
   \end{equation}
-  Однако, из леммы \ref{lemma:f=Q} следует, что $Q(u) = f(\gamma)$ при
-  $u \in [\gamma^-, \gamma^+]$. А значит \eqref{eq:fp:lower:gamma-0-1} совпадает
+  Однако, из леммы \ref{lemma:f=Q} следует, что $Q(u) = f(\alpha)$ при
+  $u \in [\alpha^-, \alpha^+]$. А значит \eqref{eq:fp:lower:alpha-0-1} совпадает
   с \eqref{eq:F:fBased} и $\F{p_{2,1}} \geqslant K^*(p)$ по построению.
 \end{proof}
 
