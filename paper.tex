@@ -47,6 +47,7 @@
 \newcommand*\Tau{\ensuremath{\mathrm{T}}}
 \newcommand*\dom{\ensuremath{\mathrm{dom\;}}}
 \newcommand*\range{\ensuremath{\mathrm{range\;}}}
+\newcommandx*\G[2][1={p_{1,1}}, 2=\tau_1]{\ensuremath{G_{n+1} \left( #1, #2 \right)}}
 
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -678,25 +679,45 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 \end{proof}
 
 \subsection{Оценка $\mathbf{W_{2,n}\left(x\right)}$}\label{sec:-dual-game-estimate}
-Аналогично тому, как это было сделано для первого игрока, параметризуем $\tau_1$
-при помощи неубывающей функции $h: [0, 1] \rightarrow [0, 1]$. Если случайная
-величина $u$ равномерно распределена на $[0, 1]$, положим $h(u) =
-p_{2,1}$. Подобным образом может быть получено любое распределение $\tau_1$.
-\begin{lemma}
-  \label{lemma:W:lowerBound:parametrized}
-  $W_{2,n+1} \geqslant \sup_h \inf_{p_{1,1}} G(p_{1,1}, h)$, где
-  \begin{equation}
-    \label{eq:W:lowerBound:parameterized}
-    \begin{aligned}
-    &G(p_{1,1}, h) = W_{2,n}\left(
-      x - \int_0^1(\Ind_{h(u) < p_{1,1}} - \Ind_{h(u) > p(u)}) \di u
-    \right) \; - \\
-    &- \int_0^1 \left[
-      \Ind_{h(u) < p_{1,1}} (-\beta p_{1,1} - \alpha h(u)) +
-      \Ind_{h(u) > p_{1,1}} (\alpha p_{1,1} + \beta h(u))
-    \right] \di u.\hspace{-.5em}
-    \end{aligned}
-  \end{equation}
+Аналогично тому, как это было сделано для первого игрока, параметризуем $\tau_1$ при помощи неубывающей функции $h: [0, 1] \rightarrow [0, 1]$.
+Если случайная величина $u$ равномерно распределена на $[0, 1]$, положим $p_{2,1} = h(u)$.
+Таким образом может быть получено любое распределение $\tau_1$.
+
+Подобно предыдущему разделу получим аналог леммы \ref{lemma:W:lowerBound:general} в терминах $h$.
+Заметим, что для $g_1^L(p_{1,1}, \tau_1)$ выполнено
+\begin{equation*}
+  g_1^L(p_{1,1},\tau_1) =&
+  \int_I \biggl[
+    \Ind_{p_{1,1}>p_{2,1}} (-\Co p_{1,1} - \Dco p_{2,1}) +
+    \Ind_{p_{1,1}<p_{2,1}} (\Dco p_{1,1} + \Co p_{2,1})
+  \biggr] \tau_1(\di p_{2,1}).
+\end{equation*}
+Аналогично для $g_1^H(p_{1,1}, \tau_1)$ верно равенство
+\begin{multline*}
+  g_1^H(p_{1,1},\tau_1) =
+  \int_I \biggl[
+    \Ind_{p_{1,1}>p_{2,1}} (1 -\Co p_{1,1} - \Dco p_{2,1}) + \\
+    + \Ind_{p_{1,1}<p_{2,1}} (\Dco p_{1,1} + \Co p_{2,1} - 1)
+  \biggr] \tau_1(\di p_{2,1}).
+\end{multline*}
+
+Введем обозначение
+\begin{multline*}%\label{eq:W:lowerBound:parameterized}
+  \G[p_{1,1}][h] = W_{2,n}\left(
+    x - \int_0^1\left[\Ind_{h(u) < p_{1,1}} - \Ind_{h(u) > p(u)}\right] \di u
+  \right) \; - \\
+  - \int_0^1 \left[
+    \Ind_{h(u) < p_{1,1}} (-\beta p_{1,1} - \alpha h(u)) +
+    \Ind_{h(u) > p_{1,1}} (\alpha p_{1,1} + \beta h(u))
+  \right] \di u.}
+\end{multline*}
+
+\begin{lemma}\label{lemma:W:lowerBound:parametrized}
+  Для любого $x \in \mathbb{R}$ выполнено
+  \begin{equation*}
+    W_{2,n+1}(x) \geqslant \sup_h \inf_{p_{1,1}} G(p_{1,1}, h),
+  \end{equation*}
+  где $\G[p_{1,1}][h]$ определяется следующим образом:
 \end{lemma}
 
 \section{Значение игры}\label{sec:-game-value}
