@@ -669,7 +669,7 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 Таким образом может быть получено любое распределение $\tau_1$.
 
 Подобно предыдущему разделу получим аналог леммы \ref{lemma:W:lowerBound:general} в терминах $h$.
-Заметим, что для $g_1^L(p_1, \tau_1)$ и $g_1^H(p_1, \tau_1)$ выполнено
+Заметим, что для $g_1^L(p_1, \tau_1)$ и $g_1^H(p_1, \tau_1)$ справедливо
 \begin{align*}
     g_1^L(p_1,\tau_1) &=
     \int_I \biggl[
@@ -700,6 +700,33 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
     W_{2,n+1}(x) \geqslant \sup_h \inf_{p_1} \G[p_1][h].
   \end{equation*}
 \end{lemma}
+
+Будем искать $S$-выравнивающую стратегию второго игрока, при $S = [h(0), h(1)]$.
+Пусть $p_1 = h(\alpha), \; \alpha \in [0, 1]$ и $h(\cdot)$ строго возрастает в $\alpha$.
+Тогда
+\begin{align*}
+  \G[h(\alpha)][h] &=
+  W_{2,n}(x + 1 - 2\alpha) - \int_\alpha^1 \biggl( \Dco h(\alpha) + \Co h(u) \biggr) \di u + \\
+  &+ \int_0^\alpha \biggl( \Co h(\alpha) + \Dco h(u) \biggr) \di u.
+\end{align*}
+
+По предположению $\G[h(\alpha)][h]$ не зависит от $\alpha$, следовательно имеет место равенство
+\begin{equation*}
+  \frac{\partial G_{n+1}}{\partial \alpha} =
+  2h(\alpha) + (\alpha - \Dco)h'(\alpha) - 2 W_{2,n}'(x - 2\alpha + 1) = 0.
+\end{equation*}
+Отсюда
+\begin{equation*}
+  h(u) = 2(u - \Dco)^{-2} \int_\Dco^u (s - \Dco) W_{2,n}'(x - 2s + 1) \di s\footnotemark.
+\end{equation*}
+\footnotetext{При $u = \Dco$ доопределим $h(\Dco)$ по непрерывности как $W_{2,n}'(x - 2\Dco + 1)$.}
+
+\textbf{TODO:}
+\begin{enumerate}
+\item Подставить $h$ в $G$ выше, получить формулу для нижней оценки,
+\item Показать, что $h$ - является неубывающей из $[0, 1]$ в $[0, 1]$,
+\item Показать, что в общем случая нижняя оценка также имеет место; для этого придется сформулировать еще одну лемму о свойствах функции $h$.
+\end{enumerate}
 
 \section{Значение игры}\label{sec:-game-value}
 TODO
