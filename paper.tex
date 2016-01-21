@@ -704,11 +704,12 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 Будем искать $S$-выравнивающую стратегию второго игрока, при $S = [h(0), h(1)]$.
 Пусть $p_1 = h(\alpha), \; \alpha \in [0, 1]$ и $h(\cdot)$ строго возрастает в $\alpha$.
 Тогда
-\begin{align*}
-  \G[h(\alpha)][h] &=
-  W_{2,n}(x + 1 - 2\alpha) - \int_\alpha^1 \biggl( \Dco h(\alpha) + \Co h(u) \biggr) \di u + \\
-  &+ \int_0^\alpha \biggl( \Co h(\alpha) + \Dco h(u) \biggr) \di u.
-\end{align*}
+\begin{multline}\label{eq:G:ha}
+    \G[h(\alpha)][h] =
+    W_{2,n}(x + 1 - 2\alpha) - \\
+    - \int_\alpha^1 \biggl( \Dco h(\alpha) + \Co h(u) \biggr) \di u
+    + \int_0^\alpha \biggl( \Co h(\alpha) + \Dco h(u) \biggr) \di u.
+\end{multline}
 
 По предположению $\G[h(\alpha)][h]$ не зависит от $\alpha$, следовательно имеет место равенство
 \begin{equation*}
@@ -720,6 +721,42 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
   h(u) = 2(u - \Dco)^{-2} \int_\Dco^u (s - \Dco) W_{2,n}'(x - 2s + 1) \di s\footnotemark.
 \end{equation*}
 \footnotetext{При $u = \Dco$ доопределим $h(\Dco)$ по непрерывности как $W_{2,n}'(x - 2\Dco + 1)$.}
+
+Очевидно, если подставить $h(u)$ в \eqref{eq:G:ha} то получившееся выражение $\Psi(h)$ не зависит от $\alpha$, следовательно можно вместо $\alpha$ подставить $\Dco$.
+
+\begin{lemma}
+  Для значения $\Psi(h)$ справедливо равенство
+  \begin{equation}\label{eq:Psi:value}
+    \Psi(h) = \int_0^1 W_{2,n}(x - 2s + 1) \di s.
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  Проведем рассмотрение при $\Co \in (0, 1)$.
+  Случаи с $\Co \in \{0, 1\}$ рассматриваются аналогично и дают тот же самый результат.
+  При подстановке $\Dco$ вместо $\alpha$ выражение \eqref{eq:G:ha} приобретает вид
+  \begin{equation*}
+    \G[h(\Dco)][h] = W_{2,n}(x - 2\Dco + 1) - \Co \int_\Dco^1 h(u) \di u + \Dco \int_0^\Dco h(u) \di u.
+  \end{equation*}
+  Для интегралов выше верны формулы
+  \begin{equation*}
+    \begin{aligned}
+      \int_0^\Dco h(u) \di u &= 2\int_0^\Dco (s/\Dco) W_{2,n}'(x - 2s + 1) \di s, \\
+      %
+      \int_\Dco^1 h(u) \di u &= 2 \int_\Dco^1 \frac{1-s}{\Co} W_{2,n}'(x - 2s + 1) \di s.
+    \end{aligned}
+  \end{equation*}
+  Отсюда получаем, что
+  \begin{equation*}
+    \G[h(\Dco)][h] = W_{2,n}(x - 1) + \int_0^1 2s W_{2,n}'(x - 2s + 1) \di s.
+  \end{equation*}
+  Остается заметить, что после интегрирования по частям
+  \begin{equation*}
+    \int_0^1 2s W_{2,n}'(x - 2s + 1) \di s
+    = \int_0^1 W_{2,n}(x - 2s + 1) \di s -
+    W_{2,n}(x - 1).
+  \end{equation*}
+  Отсюда получаем \eqref{eq:Psi:value}.
+\end{proof}
 
 \textbf{TODO:}
 \begin{enumerate}
