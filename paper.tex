@@ -717,9 +717,9 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
   2h(\alpha) + (\alpha - \Dco)h'(\alpha) - 2 W_{2,n}'(x - 2\alpha + 1) = 0.
 \end{equation*}
 Отсюда
-\begin{equation*}
+\begin{equation}\label{eq:hu}
   h(u) = 2(u - \Dco)^{-2} \int_\Dco^u (s - \Dco) W_{2,n}'(x - 2s + 1) \di s\footnotemark.
-\end{equation*}
+\end{equation}
 \footnotetext{При $u = \Dco$ доопределим $h(\Dco)$ по непрерывности как $W_{2,n}'(x - 2\Dco + 1)$.}
 
 Очевидно, если подставить $h(u)$ в \eqref{eq:G:ha} то получившееся выражение $\Psi(h)$ не зависит от $\alpha$, следовательно можно вместо $\alpha$ подставить $\Dco$.
@@ -757,6 +757,31 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
   \end{equation*}
   Отсюда получаем \eqref{eq:Psi:value}.
 \end{proof}
+
+Отметим, что несмотря на отличный вид $h(u)$, выражение для $\Psi(h)$ по форме совпадает с аналогичным выражением в [\ref{lit:demeyer02}] и не зависит от коэффициента $\Co$.
+
+\begin{lemma}
+  Функция $h(u)$ определенная в \eqref{eq:hu} обладает следующими свойствами:
+  \begin{itemize}
+  \item
+    $u \in [0, 1] \implies h(u) \in [0, 1],$
+  \item
+    $h(\cdot)$ не убывает на $[0, 1],$
+  \item
+    $h(u_1) = h(u_2) \implies W_{2,n}'(x - 2u_1 + 1) = W_{2,n}'(x - 2u_2 + 1),$
+  \item
+    $h(\cdot) \text{ не возрастает строго в } u \implies h(u) = W_{2,n}'(x - 2u + 1).$
+  \end{itemize}
+  В частности, функция $h(\cdot)$ может служить параметризацией стратегии второго игрока.
+\end{lemma}
+Доказательство этих свойств во многом повторяет доказательство лемм \ref{lemma:fp:fQ:isStrategy} и \ref{lemma:f=Q}.
+
+\begin{theorem}
+  Для гарантированного выигрыша второго игрока в игре $G_{n+1}^*(x)$ справедлива оценка
+  \begin{equation*}
+    W_{2,n+1}(x) \geqslant \int_0^1 W_{2,n}(x - 2s + 1) \di s.
+  \end{equation*}
+\end{theorem}
 
 \textbf{TODO:}
 \begin{enumerate}
