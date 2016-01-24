@@ -624,7 +624,7 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
   $u \in [u_1, u_2]$.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{theorem:V:bound}
   Для гарантированного выигрыша первого игрока в игре $G_n(P)$ справедлива оценка
   $V_{1,n+1}(P) \geqslant K^*(P).$
 \end{theorem}
@@ -777,7 +777,7 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 \end{lemma}
 Доказательство этих свойств во многом повторяет доказательство лемм \ref{lemma:fp:fQ:isStrategy} и \ref{lemma:f=Q}.
 
-\begin{theorem}
+\begin{theorem}\label{theorem:W:bound}
   Для гарантированного выигрыша второго игрока в игре $G_{n+1}^*(x)$ справедлива оценка
   \begin{equation*}
     W_{2,n+1}(x) \geqslant \int_0^1 W_{2,n}(x - 2s + 1) \di s.
@@ -825,7 +825,26 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 \end{proof}
 
 \section{Значение игры}\label{sec:-game-value}
-TODO
+Так как выражения для нижних оценок в теоремах \ref{theorem:V:bound} и \ref{theorem:W:bound} совпадают с аналогичными выражениями в [\ref{lit:demeyer02}], справедливы все двойственные соотношения между $V_{1,n}(P)$ и $W_{2,n}(x)$, а также утверждения относительно оптимальности стратегий.
+Приведем соответствующие теоремы.
+
+\begin{theorem}\label{theorem:dual:relations}
+  Для всех $x \in \mathbb{R}$ выполнено
+  \begin{equation*}
+    V_{1,n}^*(x) = W_{1,n}^*(x) = V_{2,n}^*(x) = W_{2,n}(x).
+  \end{equation*}
+  Таким образом, игры $G_n(P)$ и $G_n^*(x)$ имеют значения $V_n(P)$ и $W_n(x)$ соответственно.
+  Кроме того
+  \begin{equation}\label{eq:W:recursive}
+    W_{n+1}(x) = \int_0^1 W_n(x - 2u + 1) \di u.
+  \end{equation}
+\end{theorem}
+
+\begin{theorem}
+  Стратегия $\sigma$ является оптимальной в игре $G_n(P)$ тогда и только тогда, когда $(P, \sigma)$ является оптимальной стратегией в игре $G_n^*(x)$ при $x = V_n'(P)$.
+\end{theorem}
+
+В заключении остается обосновать сделанные ранее предположения о гладкости функций $V_{1,n}(\cdot)$, $V^*_{1,n}(\cdot)$,  $W_{2,n}(\cdot)$.
 
 \vskip 10mm
 
