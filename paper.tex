@@ -684,7 +684,7 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 \end{align*}
 
 Подставим $g_1^H(p_1, \tau_1)$ и $g_1^L(p_1,\tau_1)$ в правую часть \eqref{eq:W:bound:general} и получившийся результат обозначим как
-\begin{multline*}\label{eq:W:lowerBound:parameterized}
+\begin{multline}\label{eq:W:lowerBound:parameterized}
   \G[p_1][h] = W_{2,n}\left(
     x - \int_0^1\left[ \Ind_{h(u) < p_1} - \Ind_{h(u) > p_1} \right] \di u
   \right) \; - \\
@@ -692,7 +692,7 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
     \Ind_{h(u) < p_1} (-\Co p_1 - \Dco h(u)) +
     \Ind_{h(u) > p_1} (\Dco p_1 + \Co h(u))
   \right] \di u.
-\end{multline*}
+\end{multline}
 
 \begin{lemma}\label{lemma:W:lowerBound:parametrized}
   Для любого $x \in \mathbb{R}$ выполнено неравенство
@@ -745,7 +745,7 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
       \int_\Dco^1 h(u) \di u &= 2 \int_\Dco^1 \frac{1-s}{\Co} W_{2,n}'(x - 2s + 1) \di s.
     \end{aligned}
   \end{equation*}
-  Отсюда получаем, что
+  Таким образом, выполняется равенство
   \begin{equation*}
     \G[h(\Dco)][h] = W_{2,n}(x - 1) + \int_0^1 2s W_{2,n}'(x - 2s + 1) \di s.
   \end{equation*}
@@ -759,8 +759,9 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
 \end{proof}
 
 Отметим, что несмотря на отличный вид $h(u)$, выражение для $\Psi(h)$ по форме совпадает с аналогичным выражением в [\ref{lit:demeyer02}] и не зависит от коэффициента $\Co$.
+Таким образом, остается показать, что функция $h(\cdot)$ действительно является параметризацией стратегии второго игрока, и нижняя оценка на его выигрыш равна $\Psi(h)$.
 
-\begin{lemma}
+\begin{lemma}\label{lemma:hu:props}
   Функция $h(u)$ определенная в \eqref{eq:hu} обладает следующими свойствами:
   \begin{itemize}
   \item
@@ -782,13 +783,46 @@ Oбозначим $Q(u) = P(f(u))$. Пусть также $\pi = \Pi[P, \sigma_1]$.
     W_{2,n+1}(x) \geqslant \int_0^1 W_{2,n}(x - 2s + 1) \di s.
   \end{equation*}
 \end{theorem}
+\begin{proof}
+  Из леммы \ref{lemma:W:lowerBound:parametrized} следует, что нам достаточно показать, что при любом $p_1 \in [0, 1]$ выполнено $\G[p_1][h] \geqslant \Psi(h)$.
+  Рассмотрим несколько случаев.
 
-\textbf{TODO:}
-\begin{enumerate}
-\item Подставить $h$ в $G$ выше, получить формулу для нижней оценки,
-\item Показать, что $h$ - является неубывающей из $[0, 1]$ в $[0, 1]$,
-\item Показать, что в общем случая нижняя оценка также имеет место; для этого придется сформулировать еще одну лемму о свойствах функции $h$.
-\end{enumerate}
+  При $p_1 < h(0)$ получаем
+  \begin{align*}
+    \G[p_1][h] &= W_{2,n}(x + 1) - \int_0^1 \Dco p_1 + \Co h(u) \di u \geqslant \\
+    &\geqslant W_{2,n}(x + 1) - \int_0^1 \Dco h(0) + \Co h(1) = \Psi(h).
+  \end{align*}
+
+  Аналогично можно показать, что при $p_1 > h(0)$ выполняется неравенство $\G[p_1][h] \geqslant \Psi(h)$.
+
+  Пусть теперь $p_1 = h(\alpha), \; \alpha \in [0, 1]$.
+  Введем обозначения
+  \[
+    \alpha^- = \inf \left\{ x \;|\; h(x) = h(\alpha) \right\}, \quad
+    \alpha^+ = \sup \left\{ x \;|\; h(x) = h(\alpha) \right\}.
+  \]
+  Пробразовав \eqref{eq:W:lowerBound:parameterized}, получим что
+  \begin{multline}\label{eq:g:+-}
+    \G[p_1][h] = W_{2,n}(x + 1 - \alpha^- - \alpha^+) \enskip - \\
+    - \int_0^{\alpha^-} \left(-\Co p_1 - \Dco h(u)\right) \di u
+    - \int_{\alpha^+}^1 \left(\Dco p_1 + \Co h(u)\right) \di u.
+  \end{multline}
+  Так как $W_{2,n}(\cdot)$ -- гладкая вогнутая функция, то верно неравенство
+  \begin{multline}\label{eq:W:+-:ineq}
+    W_{2,n}(x + 1 - 2\alpha) \leqslant W_{2,n}(x + 1 - \alpha^- - \alpha^+) \enskip +\\
+    + W_{2,n}'(x + 1 - \alpha^- - \alpha^+) \left( [ \alpha^+ - \alpha ] + [ \alpha^- - \alpha ] \right).
+  \end{multline}
+  Из леммы \ref{lemma:hu:props} следует, что
+  $W_{2,n}'(x + 1 - \alpha^- - \alpha^+) = W_{2,n}'(x + 1 - 2\alpha) = h(\alpha).$
+  Отсюда и из \eqref{eq:W:+-:ineq} получаем, что
+  \begin{multline*}
+    W_{2,n}(x + 1 - \alpha^- - \alpha^+) \geqslant W_{2,n}(x + 1 - 2\alpha) - \\
+    - \int_\alpha^{\alpha^+} \left( \Dco p_1 + \Co h(u) \right) \di u
+    - \int_{\alpha^-}^\alpha \left( -\Co p_1 - \Dco h(u) \right) \di u.
+  \end{multline*}
+  Подставив данное выражение в \eqref{eq:g:+-}, получаем в точности \eqref{eq:G:ha}.
+  Следовательно $\G[p_1][h] \geqslant \Psi(h)$.
+\end{proof}
 
 \section{Значение игры}\label{sec:-game-value}
 TODO
