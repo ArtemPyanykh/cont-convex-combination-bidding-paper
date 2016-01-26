@@ -160,7 +160,7 @@ $\Co$ равен $1$. Обобщение дискретной модели на случай произвольного $\Co$
 Обозначим множество возможных состояний рынка через $S = \{H, L\}$; $s \in S$ при этом обозначает состояние, в котором на самом деле находится рынок.
 
 Два игрока на этом рынке на протяжении $n$ шагов ведут между собой торги за одну единицу рискового актива.
-Каждый игрок делает ставку из множества $I = [0, 1]$; игрок предложивший большую ставку покупает у другого акцию по заданной цене.
+Каждый игрок делает ставку из множества $I = [0, 1]$; игрок, предложивший большую ставку, покупает у другого акцию по заданной цене.
 
 Обозначим через $\Port{t} = (\Port{t}^R, \Port{t}^N)$ портфель первого игрока на $t$-ом шаге торгов, где $\Port{t}^R$ и $\Port{t}^N$ -- количество единиц рискового и безрискового активов соответственно.
 Если на $t$-ом шаге игроки делают ставки $p_{1,t} \in I, \: p_{2,t} \in I$, то портфель
@@ -424,25 +424,25 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
 Переходя к $f$ и $Q$ в формуле \eqref{eq:g1:marginal:aposterior} получаем следующее равенство:
 \begin{multline}\label{eq:F:pBased}
   \F{p_2} =
-  \int_0^1 \Ind_{f(u) > p_2} (Q(u) - \beta f(u) - \alpha p_2) \di u \enskip + \\
-  + \int_0^1 \Ind_{f(u) < p_2} (\alpha f(u) + \beta p_2 - Q(u)) \di u \;
+  \int_0^1 \Ind_{f(u) > p_2} (Q(u) - \Co f(u) - \Dco p_2) \di u \enskip + \\
+  + \int_0^1 \Ind_{f(u) < p_2} (\Dco f(u) + \Co p_2 - Q(u)) \di u \;
   + \int_0^1 V_{1,n}(Q(u)) \di u.
 \end{multline}
 
 В [\ref{lit:demeyer02}] показано, что функции $f$ и $Q$ должны удовлетворять следующим свойствам, чтобы является параметризацией одношаговой стратегии первого игрока в игре $G_n(P)$:
-\vspace{-2em}
+\vspace{-1.5em}
 \begin{adjustwidth}{\parindent}{0em}
   \begin{subequations}
     \begin{flalign}
       \label{eq:fp:strategy:par:inc}
       \bullet \quad f \text{ не убывает на } [0, 1], &&
     \end{flalign}
-    \vspace{-2.0em}
+    %
     \begin{flalign}
       \label{eq:fp:strategy:par:eqP}
       \bullet \quad \int_0^1 Q(u) \di u = P, &&
     \end{flalign}
-    \vspace{-1.5em}
+    %
     \begin{flalign}
       \label{eq:fp:strategy:par:apostEq}
       \bullet \quad \forall x, y \in [0, 1]: f(x) = f(y) \implies Q(x) = Q(y). &&
@@ -732,8 +732,8 @@ $W^*_0(x) = \phi(x) = \min(x, 0)$,
 Отсюда
 \begin{equation}\label{eq:hu}
   h(u) = 2(u - \Dco)^{-2} \int_\Dco^u (s - \Dco) W_{2,n}'(x - 2s + 1) \di s\footnotemark.
+  \footnotetext{При $u = \Dco$ доопределим $h(\Dco)$ по непрерывности как $W_{2,n}'(x - 2\Dco + 1)$.}
 \end{equation}
-\footnotetext{При $u = \Dco$ доопределим $h(\Dco)$ по непрерывности как $W_{2,n}'(x - 2\Dco + 1)$.}
 
 Очевидно, если подставить $h(u)$ в \eqref{eq:G:ha} то получившееся выражение $\Psi(h)$ не зависит от $\alpha$, следовательно можно вместо $\alpha$ подставить $\Dco$.
 
