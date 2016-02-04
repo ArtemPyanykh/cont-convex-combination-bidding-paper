@@ -459,9 +459,7 @@ $
   где $f$ и $Q$ удовлетворяют \eqref{eq:fp:strategy:par:inc} -- \eqref{eq:fp:strategy:par:apostEq}.
 \end{lemma}
 
-
 Будем искать пару $(f, Q)$, выравнивающую выигрыш первого игрока при $p_2 \in [f(0), f(1)]$.
-
 Пусть $p_2 = f(\alpha)$ для некоторого $\alpha \in [0, 1]$, и $f$ возрастает в некоторой окрестности точки $\alpha$.
 Тогда для выравнивающей пары $(f, Q)$ выражение
 \begin{multline}\label{eq:F:fBased}
@@ -497,7 +495,7 @@ $
   \end{gathered}
 \end{equation}
 
-\begin{lemma}
+\begin{lemma}\label{lemma:phi:formula}
   Для $\Phi(Q)$ справедливо следующее выражение:
   \begin{equation}\label{eq:phi(q)}
     \Phi(Q) = \int_0^1 (2u - 1) Q(u) \di u + \int_0^1 V_{1,n}(Q(u)) \di u.
@@ -570,7 +568,7 @@ $
   \Phi(Q) = K^*(P).
 \end{equation}
 
-Отметим, что хотя функция $f(u)$ зависит от коэффициента $\Co$, функции $Q(u)$ и $\Phi(Q)$ от него не зависят и по форме совпадают с аналогичными выражениями в [\ref{lit:demeyer02}].
+Отметим, что хотя функция $f(u)$ зависит от коэффициента $\Co$, выражения для функций $Q(u)$ и $\Phi(Q)$ от него не зависят и по форме совпадают с аналогичными выражениями в [\ref{lit:demeyer02}].
 Данный факт позволит нам без изменений использовать соотношения из [\ref{lit:demeyer02}] между нижним и верхним значениями прямой и двойственной игр.
 Но прежде нужно показать, что полученные $f$ и $Q$ действительно удовлетворяют условиям \eqref{eq:fp:strategy:par:inc} -- \eqref{eq:fp:strategy:par:apostEq} и доставляют гарантированный выигрыш первого игрока, равный $K^*(P)$.
 
@@ -686,10 +684,10 @@ $
 \subsection{Оценка $\mathbf{W_{2,n}\left(x\right)}$}\label{sec:-dual-game-estimate}
 Аналогично тому, как это было сделано для первого игрока, параметризуем $\tau_1$ при помощи неубывающей функции $h: [0, 1] \rightarrow [0, 1]$.
 Если случайная величина $u$ равномерно распределена на $[0, 1]$, положим $p_2 = h(u)$.
-Таким образом может быть получено любое распределение $\tau_1$.
+Таким образом может быть получено любое распределение $\tau_1$ для $p_2$.
 
 Подобно предыдущему разделу получим аналог леммы \ref{lemma:W:lowerBound:general} в терминах $h$.
-Заметим, что для $g_1^L(p_1, \tau_1)$ и $g_1^H(p_1, \tau_1)$ справедливо
+Заметим, что для $g_1^L(p_1, \tau_1)$ и $g_1^H(p_1, \tau_1)$ справедливы равенства
 \begin{align*}
     g_1^L(p_1,\tau_1) &=
     \int_I \biggl[
@@ -721,17 +719,17 @@ $
   \end{equation*}
 \end{lemma}
 
-Будем искать $S$-выравнивающую стратегию второго игрока, при $S = [h(0), h(1)]$.
-Пусть $p_1 = h(\alpha), \; \alpha \in [0, 1]$ и $h(\cdot)$ строго возрастает в $\alpha$.
-Тогда
+Будем искать стратегию второго игрока, выравнивающую его выигрыш при $p_1 \in [h(0), h(1)]$.
+Пусть $p_1 = h(\alpha)$ для некоторого $\alpha \in [0, 1]$, и $h(\cdot)$ возрастает в некоторой окрестности точки $\alpha$.
+Тогда для выравнивающей функции $h$ выражение
 \begin{multline}\label{eq:G:ha}
     \G[h(\alpha)][h] =
     W_{2,n}(x + 1 - 2\alpha) - \\
     - \int_\alpha^1 \biggl( \Dco h(\alpha) + \Co h(u) \biggr) \di u
     + \int_0^\alpha \biggl( \Co h(\alpha) + \Dco h(u) \biggr) \di u.
 \end{multline}
-
-По предположению $\G[h(\alpha)][h]$ не зависит от $\alpha$, следовательно имеет место равенство
+не зависит от $\alpha$.
+Следовательно
 \begin{equation*}
   \frac{\partial G_{n+1}}{\partial \alpha} =
   2h(\alpha) + (\alpha - \Dco)h'(\alpha) - 2 W_{2,n}'(x - 2\alpha + 1) = 0.
@@ -742,7 +740,7 @@ $
   \footnotetext{При $u = \Dco$ доопределим $h(\Dco)$ по непрерывности как $W_{2,n}'(x - 2\Dco + 1)$.}
 \end{equation}
 
-Очевидно, если подставить $h(u)$ в \eqref{eq:G:ha} то получившееся выражение $\Psi(h)$ не зависит от $\alpha$, следовательно можно вместо $\alpha$ подставить $\Dco$.
+Если подставить $h(u)$ в \eqref{eq:G:ha} то получившееся выражение $\Psi(h)$ не зависит от $\alpha$.
 
 \begin{lemma}
   Для значения $\Psi(h)$ справедливо равенство
@@ -750,52 +748,27 @@ $
     \Psi(h) = \int_0^1 W_{2,n}(x - 2s + 1) \di s.
   \end{equation}
 \end{lemma}
-\begin{proof}
-  Проведем рассмотрение при $\Co \in (0, 1)$.
-  Случаи с $\Co \in \{0, 1\}$ рассматриваются аналогично и дают тот же самый результат.
-  При подстановке $\Dco$ вместо $\alpha$ выражение \eqref{eq:G:ha} приобретает вид
-  \begin{equation*}
-    \G[h(\Dco)][h] = W_{2,n}(x - 2\Dco + 1) - \Co \int_\Dco^1 h(u) \di u + \Dco \int_0^\Dco h(u) \di u.
-  \end{equation*}
-  Для интегралов выше верны формулы
-  \begin{equation*}
-    \begin{aligned}
-      \int_0^\Dco h(u) \di u &= 2\int_0^\Dco (s/\Dco) W_{2,n}'(x - 2s + 1) \di s, \\
-      %
-      \int_\Dco^1 h(u) \di u &= 2 \int_\Dco^1 \frac{1-s}{\Co} W_{2,n}'(x - 2s + 1) \di s.
-    \end{aligned}
-  \end{equation*}
-  Таким образом, выполняется равенство
-  \begin{equation*}
-    \G[h(\Dco)][h] = W_{2,n}(x - 1) + \int_0^1 2s W_{2,n}'(x - 2s + 1) \di s.
-  \end{equation*}
-  Остается заметить, что после интегрирования по частям
-  \begin{equation*}
-    \int_0^1 2s W_{2,n}'(x - 2s + 1) \di s
-    = \int_0^1 W_{2,n}(x - 2s + 1) \di s -
-    W_{2,n}(x - 1).
-  \end{equation*}
-  Отсюда получаем \eqref{eq:Psi:value}.
-\end{proof}
+Доказательство аналогично доказательству леммы \ref{lemma:phi:formula}.
 
-Отметим, что несмотря на отличный вид $h(u)$, выражение для $\Psi(h)$ по форме совпадает с аналогичным выражением в [\ref{lit:demeyer02}] и не зависит от коэффициента $\Co$.
-Таким образом, остается показать, что функция $h(\cdot)$ действительно является параметризацией стратегии второго игрока, и нижняя оценка на его выигрыш равна $\Psi(h)$.
+Отметим, что несмотря на зависимость $h(u)$ от $\beta$, выражение для функции $\Psi(h)$ от него не зависит и по форме совпадает с аналогичным выражением в [\ref{lit:demeyer02}].
+Таким образом, остается показать, что функция $h(\cdot)$ действительно является параметризацией некоторой стратегии $\tau_1$ второго игрока, и нижняя оценка его выигрыша равна $\Psi(h)$.
 
 \begin{lemma}\label{lemma:hu:props}
   Функция $h(u)$ определенная в \eqref{eq:hu} обладает следующими свойствами:
   \begin{itemize}
   \item
-    $u \in [0, 1] \implies h(u) \in [0, 1],$
+    $u \in [0, 1] \implies h(u) \in [0, 1];$
   \item
-    $h(\cdot)$ не убывает на $[0, 1],$
+    $h(\cdot)$ не убывает на $[0, 1];$
   \item
-    $h(u_1) = h(u_2) \implies W_{2,n}'(x - 2u_1 + 1) = W_{2,n}'(x - 2u_2 + 1),$
-  \item
-    $h(\cdot) \text{ не возрастает строго в } u \implies h(u) = W_{2,n}'(x - 2u + 1).$
+    $
+    h(u_1) = h(u_2) \implies
+    h(u_1) = W_{2,n}'(x - 2u_1 + 1) = W_{2,n}'(x - 2u_2 + 1).
+    $
   \end{itemize}
-  В частности, функция $h(\cdot)$ может служить параметризацией стратегии второго игрока.
+  В частности, функция $h(\cdot)$ может служить параметризацией некоторой стратегии $\tau_1$ второго игрока.
 \end{lemma}
-Доказательство этих свойств во многом повторяет доказательство лемм \ref{lemma:fp:fQ:isStrategy} и \ref{lemma:f=Q}.
+Доказательство этих свойств во многом повторяет доказательствa лемм \ref{lemma:fp:fQ:isStrategy} и \ref{lemma:f=Q}.
 
 \begin{theorem}\label{theorem:W:bound}
   Для гарантированного выигрыша второго игрока в игре $G_{n+1}^*(x)$ справедлива оценка
@@ -807,13 +780,15 @@ $
   Из леммы \ref{lemma:W:lowerBound:parametrized} следует, что нам достаточно показать, что при любом $p_1 \in [0, 1]$ выполнено $\G[p_1][h] \geqslant \Psi(h)$.
   Рассмотрим несколько случаев.
 
-  При $p_1 < h(0)$ получаем
-  \begin{align*}
-    \G[p_1][h] &= W_{2,n}(x + 1) - \int_0^1 \Dco p_1 + \Co h(u) \di u \geqslant \\
-    &\geqslant W_{2,n}(x + 1) - \int_0^1 \Dco h(0) + \Co h(1) = \Psi(h).
-  \end{align*}
+  При $p_1 < h(0)$ из \eqref{eq:W:lowerBound:parameterized} и \eqref{eq:G:ha} получаем
+  \begin{multline*}
+    \G[p_1][h] =
+    W_{2,n}(x + 1) - \int_0^1 \left( \Dco p_1 + \Co h(u) \right) \di u \geqslant \\
+    \geqslant W_{2,n}(x + 1) - \int_0^1 \left( \Dco h(0) + \Co h(1) \right) \di u =
+    \G[h(0)][h] = \Psi(h).
+  \end{multline*}
 
-  Аналогично можно показать, что при $p_1 > h(0)$ выполняется неравенство $\G[p_1][h] \geqslant \Psi(h)$.
+  Аналогично можно показать, что при $p_1 > h(1)$ выполняется неравенство $\G[p_1][h] \geqslant \Psi(h)$.
 
   Пусть теперь $p_1 = h(\alpha), \; \alpha \in [0, 1]$.
   Введем обозначения
@@ -821,27 +796,34 @@ $
     \alpha^- = \inf \left\{ x \;|\; h(x) = h(\alpha) \right\}, \quad
     \alpha^+ = \sup \left\{ x \;|\; h(x) = h(\alpha) \right\}.
   \]
-  Прeобразовав \eqref{eq:W:lowerBound:parameterized}, получим что
+  Из \eqref{eq:W:lowerBound:parameterized} находим
   \begin{multline}\label{eq:g:+-}
     \G[p_1][h] = W_{2,n}(x + 1 - \alpha^- - \alpha^+) \enskip - \\
     - \int_0^{\alpha^-} \left(-\Co p_1 - \Dco h(u)\right) \di u
     - \int_{\alpha^+}^1 \left(\Dco p_1 + \Co h(u)\right) \di u.
   \end{multline}
-  Так как $W_{2,n}(\cdot)$ -- гладкая вогнутая функция, то верно неравенство
-  \begin{multline}\label{eq:W:+-:ineq}
+  Поскольку $W_{2,n}(\cdot)$ -- дифференцируемая вогнутая функция, верно неравенство
+  \begin{multline*}
     W_{2,n}(x + 1 - 2\alpha) \leqslant W_{2,n}(x + 1 - \alpha^- - \alpha^+) \enskip +\\
     + W_{2,n}'(x + 1 - \alpha^- - \alpha^+) \left( [ \alpha^+ - \alpha ] + [ \alpha^- - \alpha ] \right).
-  \end{multline}
-  Из леммы \ref{lemma:hu:props} следует, что
-  $W_{2,n}'(x + 1 - \alpha^- - \alpha^+) = W_{2,n}'(x + 1 - 2\alpha) = h(\alpha).$
-  Отсюда и из \eqref{eq:W:+-:ineq} получаем, что
+  \end{multline*}
+  Из леммы \ref{lemma:hu:props} при $u_1 = (\alpha^- + \alpha^+)/2,\: u_2 = \alpha$ следует, что
+  \[
+  W_{2,n}'(x + 1 - \alpha^- - \alpha^+) = W_{2,n}'(x + 1 - 2\alpha) = h(\alpha).
+  \]
+  Так как $h(u)$ постоянная на $[\alpha^-, \alpha^+]$ и $h(\alpha) = p_1$ имеем
   \begin{multline*}
     W_{2,n}(x + 1 - \alpha^- - \alpha^+) \geqslant W_{2,n}(x + 1 - 2\alpha) - \\
     - \int_\alpha^{\alpha^+} \left( \Dco p_1 + \Co h(u) \right) \di u
-    - \int_{\alpha^-}^\alpha \left( -\Co p_1 - \Dco h(u) \right) \di u.
+    + \int_{\alpha^-}^\alpha \left( \Co p_1 + \Dco h(u) \right) \di u.
   \end{multline*}
-  Подставив данное выражение в \eqref{eq:g:+-}, получаем в точности \eqref{eq:G:ha}.
-  Следовательно $\G[p_1][h] \geqslant \Psi(h)$.
+  Используя выражение для $W_{2,n}(x + 1 - \alpha^- - \alpha^+)$ в \eqref{eq:g:+-}, получаем
+  \begin{multline*}
+    \G[p_1][h] \geqslant W_{2,n}(x + 1 - 2\alpha)
+    - \int_\alpha^1 \biggl( \Dco h(\alpha) + \Co h(u) \biggr) \di u \; + \\
+    + \int_0^\alpha \biggl( \Co h(\alpha) + \Dco h(u) \biggr) \di u = \G[h(\alpha)][h] = \Psi(h).
+  \end{multline*}
+  Таким образом, неравенство имеет место при любом $p_1 \in [0, 1]$.
 \end{proof}
 
 \section{Значение игры}\label{sec:-game-value}
